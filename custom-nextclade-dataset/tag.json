@@ -26,6 +26,13 @@
     "name": {
       "value": "CUSTOM NAME",
       "valueFriendly": "CUSTOM FRIENDLY"
+    },
+    "reference": {
+      "value": "CY121680",
+      "valueFriendly": "A/California/07/2009(H1N1)"
+    },
+    "tag": {
+      "value": "2023-04-28T00:00:00Z"
     }
   }
 }
