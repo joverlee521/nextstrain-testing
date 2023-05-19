@@ -1,0 +1,9 @@
+name: Use reusable
+
+on: workflow_dispatch
+
+jobs:
+  run-reusable:
+    uses: joverlee521/nextstrain-testing/.github/workflows/test-reusable.yaml@716bdbdf2291fc3de1dc71e32167232274398784
+    with:
+      ref: 716bdbdf2291fc3de1dc71e32167232274398784
