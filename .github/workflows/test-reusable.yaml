@@ -53,12 +53,9 @@ jobs:
           | ./bin/format-envvar
           | tee -a "$GITHUB_ENV"
 
-      - name: Create env.d
-        run: mkdir env.d
-
       - name: Add test envvar
         run: |
-          ./bin/write-env env.d ${{ inputs.runtime-envvar-names }}
+          ./bin/write-envdir env.d ${{ inputs.runtime-envvar-names }}
 
       - name: Run build
         run: |
