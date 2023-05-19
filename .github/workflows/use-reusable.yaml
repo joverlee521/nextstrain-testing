@@ -10,4 +10,4 @@ jobs:
       env: |
         NEXTSTRAIN_DOCKER_IMAGE: nextstrain/base:latest
         SLACK_TOKEN: secrets.BOGUS_SLACK_TOKEN
-      secrets: inherit
+    secrets: inherit
