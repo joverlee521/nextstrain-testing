@@ -1,5 +1,4 @@
-yq --output-format json .
-| jq --raw-output '
+yq --output-format json . | jq --raw-output '
     to_entries
   | map(if .value|startswith("secrets.") then .value="${{ "+.value+" }}" else . end)
   | map("\(.key)<<__EOF__\n\(.value)\n__EOF__")
