@@ -50,13 +50,7 @@ jobs:
           # shellcheck disable=SC2154
 
           echo "$env"
-          | yq --output-format json .
-          | jq --raw-output '
-              to_entries
-            | map(if .value|startswith("secrets") then .value="${{ "+.value+" }}" else . end)
-            | map("\(.key)<<__EOF__\n\(.value)\n__EOF__")
-            | join("\n")
-          '
+          | ./bin/format-envvar
           | tee -a "$GITHUB_ENV"
 
       - name: Create env.d
