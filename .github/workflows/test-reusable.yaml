@@ -51,3 +51,7 @@ jobs:
           nextstrain build \
             --exec env . \
             envdir env.d printenv TEST
+
+      - name: Check Augur
+        shell: nextstrain shell . {0}
+        run: augur --version
