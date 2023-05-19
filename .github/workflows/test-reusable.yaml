@@ -1,0 +1,19 @@
+name: Reusable
+
+on:
+  workflow_call:
+    inputs:
+      ref:
+        type: string
+        required: true
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: joverlee521/nextstrain-testing
+          ref: ${{ inputs.ref }}
+
+      - run: ./bin/hello-world
