@@ -17,3 +17,5 @@ jobs:
           ref: ${{ inputs.ref }}
 
       - run: ./bin/hello-world
+
+      - run: ./bin/hello-new-world
