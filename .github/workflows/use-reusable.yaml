@@ -4,6 +4,6 @@ on: workflow_dispatch
 
 jobs:
   run-reusable:
-    uses: joverlee521/nextstrain-testing/.github/workflows/test-reusable.yaml@ba35a2e53eca2aef35c3b48ddba4d21dd5a66ec0
+    uses: joverlee521/nextstrain-testing/.github/workflows/test-reusable.yaml@88288bc11dbee1a447344a1f6fb5b66f7e10413c
     with:
-      ref: ba35a2e53eca2aef35c3b48ddba4d21dd5a66ec0
+      ref: 88288bc11dbee1a447344a1f6fb5b66f7e10413c
