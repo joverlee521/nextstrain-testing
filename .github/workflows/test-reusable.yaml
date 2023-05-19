@@ -6,6 +6,12 @@ on:
       ref:
         type: string
         required: true
+      env:
+        type: string
+        required: false
+      runtime-envvar-names:
+        type: string
+        required: false
 
 jobs:
   run:
@@ -36,21 +42,35 @@ jobs:
         shell: nextstrain shell . {0}
         run: pip install envdir
 
+      - if: inputs.env
+        name: Set environment variables
+        env:
+          env: ${{ inputs.env }}
+        run: >
+          # shellcheck disable=SC2154
+
+          echo "$env"
+          | yq --output-format json .
+          | jq --raw-output '
+              to_entries
+            | map(if .value|startswith("secrets") then .value="${{ "+.value+" }}" else . end)
+            | map("\(.key)<<__EOF__\n\(.value)\n__EOF__")
+            | join("\n")
+          '
+          | tee -a "$GITHUB_ENV"
+
       - name: Create env.d
         run: mkdir env.d
 
       - name: Add test envvar
         run: |
-          cd env.d
-          echo ${{ env.TEST }} > TEST
-        env:
-          TEST: HELLO-TEST
+          ./bin/write-env env.d ${{ inputs.runtime-envvar-names }}
 
       - name: Run build
         run: |
           nextstrain build \
             --exec env . \
-            envdir env.d printenv TEST
+            envdir env.d printenv ${{ inputs.runtime-envvar-names }}
 
       - name: Check Augur
         shell: nextstrain shell . {0}
