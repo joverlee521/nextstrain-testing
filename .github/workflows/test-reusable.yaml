@@ -73,3 +73,11 @@ jobs:
       - name: Check Augur
         shell: nextstrain shell . {0}
         run: augur --version
+
+      # TODO: DELETE/UPDATE ME BEFORE ADDING ANY REAL SECRETS TO THE ENV.D DIRECTORY!
+      - if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: TEST UPLOAD ENV.D
+          path: |
+            env.d
