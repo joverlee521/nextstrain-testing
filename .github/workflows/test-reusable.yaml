@@ -47,10 +47,17 @@ jobs:
         env:
           env: ${{ inputs.env }}
         run: >
-          # shellcheck disable=SC2154
-
           echo "$env"
-          | ./bin/format-envvar
+          | yq --output-format json .
+          | ./bin/json-to-envvar
+          | tee -a "$GITHUB_ENV"
+
+      - name: Set secrets to envvars
+        env:
+          secrets: ${{ toJson(secrets) }}
+        run: >
+          echo "$secrets"
+          | ./bin/json-to-envvar
           | tee -a "$GITHUB_ENV"
 
       - name: Add test envvar
