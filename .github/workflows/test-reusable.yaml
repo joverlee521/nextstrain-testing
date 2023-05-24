@@ -20,7 +20,21 @@ env:
   ENVDIR: env.d
 
 jobs:
+  configuration:
+    runs-on: ubuntu-latest
+    steps:
+      - id: inputs
+        env:
+          paths: ${{ inputs.artifact-paths }}
+        shell: bash
+        run: |
+          paths="$(yq --output-format=json --indent=0 . <<<"$paths")"
+          echo paths="$paths" | tee -a "$GITHUB_OUTPUT"
+    outputs:
+      build-output-paths: ${{ steps.inputs.outputs.paths }}
+
   run:
+    needs: configuration
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -87,5 +101,5 @@ jobs:
           name: output
           path: |
             build.log
-            ${{ inputs.artifact-paths }}
+            ${{ needs.configuration.outputs.build-output-paths }}
             !${{ env.ENVDIR }}
