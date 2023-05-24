@@ -12,6 +12,10 @@ on:
       runtime-envvar-names:
         type: string
         required: false
+      artifact-paths:
+        type: string
+        required: false
+
 
 jobs:
   run:
@@ -68,7 +72,8 @@ jobs:
         run: |
           nextstrain build \
             --exec env . \
-            envdir env.d printenv ${{ inputs.runtime-envvar-names }}
+            envdir env.d printenv ${{ inputs.runtime-envvar-names }} \
+          | tee build.log
 
       - name: Check Augur
         shell: nextstrain shell . {0}
@@ -80,4 +85,5 @@ jobs:
         with:
           name: TEST UPLOAD ENV.D
           path: |
-            env.d
+            build.log
+            ${{ inputs.artifact-paths }}
