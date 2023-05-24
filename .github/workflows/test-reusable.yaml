@@ -16,6 +16,8 @@ on:
         type: string
         required: false
 
+env:
+  ENVDIR: env.d
 
 jobs:
   run:
@@ -66,24 +68,24 @@ jobs:
 
       - name: Add test envvar
         run: |
-          ./bin/write-envdir env.d ${{ inputs.runtime-envvar-names }}
+          ./bin/write-envdir ${{ env.ENVDIR }} ${{ inputs.runtime-envvar-names }}
 
       - name: Run build
         run: |
           nextstrain build \
             --exec env . \
-            envdir env.d printenv ${{ inputs.runtime-envvar-names }} \
+            envdir ${{ env.ENVDIR }} printenv ${{ inputs.runtime-envvar-names }} \
           | tee build.log
 
       - name: Check Augur
         shell: nextstrain shell . {0}
         run: augur --version
 
-      # TODO: DELETE/UPDATE ME BEFORE ADDING ANY REAL SECRETS TO THE ENV.D DIRECTORY!
       - if: always()
         uses: actions/upload-artifact@v3
         with:
-          name: TEST UPLOAD ENV.D
+          name: output
           path: |
             build.log
             ${{ inputs.artifact-paths }}
+            !${{ env.ENVDIR }}
