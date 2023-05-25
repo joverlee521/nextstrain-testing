@@ -54,6 +54,14 @@ jobs:
             echo "DISTRIB_RELEASE=18.04" > /etc/lsb-release
           fi
 
+      - name: Add test envvar
+        shell: bash
+        env:
+          varnames: ${{ inputs.runtime-envvars-names }}
+        run: |
+          read -a runtime_varnames -r -d $'\0' <<<"$varnames"
+          # ./bin/write-envdir ${{ env.ENVDIR }} "${varnames[@]}"
+
       - uses: nextstrain/.github/actions/setup-nextstrain-cli@master
         with:
           runtime: conda
@@ -79,13 +87,6 @@ jobs:
           echo "$secrets"
           | ./bin/json-to-envvar
           | tee -a "$GITHUB_ENV"
-
-      - name: Add test envvar
-        env:
-          varnames: ${{ inputs.runtime-envvars-names }}
-        run: |
-          read -a varnames -r -d $'\0' <<<"$varnames"
-          ./bin/write-envdir ${{ env.ENVDIR }} "${varnames[@]}"
 
       - name: Run build
         run: |
