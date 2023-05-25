@@ -81,8 +81,11 @@ jobs:
           | tee -a "$GITHUB_ENV"
 
       - name: Add test envvar
+        env:
+          varnames: ${{ inputs.runtime-envvars-names }}
         run: |
-          ./bin/write-envdir ${{ env.ENVDIR }} ${{ inputs.runtime-envvar-names }}
+          read -a varnames -r -d $'\0' <<<"$varnames"
+          ./bin/write-envdir ${{ env.ENVDIR }} "${varnames[@]}"
 
       - name: Run build
         run: |
