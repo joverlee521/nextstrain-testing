@@ -3,9 +3,6 @@ name: Reusable
 on:
   workflow_call:
     inputs:
-      ref:
-        type: string
-        required: true
       env:
         type: string
         required: false
@@ -20,27 +17,35 @@ env:
   ENVDIR: env.d
 
 jobs:
-  configuration:
+  get-ref:
     runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
     steps:
-      - id: inputs
-        env:
-          paths: ${{ inputs.artifact-paths }}
-        shell: bash
-        run: |
-          paths="$(yq --output-format=json --indent=0 . <<<"$paths")"
-          echo paths="$paths" | tee -a "$GITHUB_OUTPUT"
+      - id: ref
+        name: Get reusable workflow ref via API
+        run: >
+          sha="$(gh api \
+              -H 'Accept: application/vnd.github+json' \
+              repos/joverlee521/nextstrain-testing/actions/runs/${{ github.run_id }} \
+            | jq --raw-output '
+                .referenced_workflows
+              | map(select(.path
+              | contains("joverlee521/nextstrain-testing/.github/workflows/test-reusable.yaml")))
+              | .[0].sha')"
+
+          echo sha="$sha" | tee -a "$GITHUB_OUTPUT"
     outputs:
-      build-output-paths: ${{ steps.inputs.outputs.paths }}
+      sha: ${{ steps.ref.outputs.sha }}
 
   run:
-    needs: configuration
+    needs: get-ref
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
           repository: joverlee521/nextstrain-testing
-          ref: ${{ inputs.ref }}
+          ref: ${{ needs.get-ref.outputs.sha }}
 
       - run: ./bin/hello-world
 
@@ -105,5 +110,4 @@ jobs:
           name: output
           path: |
             build.log
-            ${{ needs.configuration.outputs.build-output-paths }}
             !${{ env.ENVDIR }}
