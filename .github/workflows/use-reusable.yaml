@@ -4,7 +4,7 @@ on: workflow_dispatch
 
 jobs:
   run-reusable:
-    uses: joverlee521/nextstrain-testing/.github/workflows/test-reusable.yaml@077739967dae0e56fe09f40b2c9a310450d54d49
+    uses: joverlee521/nextstrain-testing/.github/workflows/test-reusable.yaml@c0bf4b4a3679437047cff05fde596a4a218dbbee
     with:
       env: |
         NEXTSTRAIN_DOCKER_IMAGE: nextstrain/base:latest
