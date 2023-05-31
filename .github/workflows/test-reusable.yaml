@@ -64,8 +64,8 @@ jobs:
         env:
           varnames: ${{ inputs.runtime-envvars-names }}
         run: |
-          read -a runtime_varnames -r -d $'\0' <<<"$varnames"
-          # ./bin/write-envdir ${{ env.ENVDIR }} "${varnames[@]}"
+          read -a runtime_varnames -r -d $'\0' <<<"$varnames" || true
+          ./bin/write-envdir ${{ env.ENVDIR }} "${runtime_varnames[@]}"
 
       - uses: nextstrain/.github/actions/setup-nextstrain-cli@master
         with:
