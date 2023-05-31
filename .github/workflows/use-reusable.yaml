@@ -13,3 +13,14 @@ jobs:
         - env.d/
         - auspice/
     secrets: inherit
+
+  run-reusable-2:
+    uses: joverlee521/nextstrain-testing/.github/workflows/test-reusable.yaml@d26d11292a6ae3e00031fb8c37ae71be53e6ac51
+    with:
+      env: |
+        NEXTSTRAIN_DOCKER_IMAGE: nextstrain/base:latest
+      runtime-envvar-names: BOGUS_SLACK_TOKEN
+      artifact-paths: |
+        - env.d/
+        - auspice/
+    secrets: inherit
