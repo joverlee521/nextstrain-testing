@@ -4,9 +4,15 @@ permissions:
   id-token: write
 
 outputs:
-  ref: ${{ steps.context.outputs.ref }}
-  sha: ${{ steps.context.outputs.sha }}
-  repository: ${{ steps.context.outputs.repository }}
+  ref:
+    description: "Workflow ref"
+    value: ${{ steps.context.outputs.ref }}
+  sha:
+    description: "Workflow sha"
+    value: ${{ steps.context.outputs.sha }}
+  repository:
+    description: "Workflow repository"
+    value: ${{ steps.context.outputs.repository }}
 
 runs:
   using: composite
