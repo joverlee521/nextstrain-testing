@@ -19,6 +19,8 @@ env:
 jobs:
   get-ref:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
     steps:
       - id: workflow-context
         uses: joverlee521/nextstrain-testing/actions/workflow-context@main
