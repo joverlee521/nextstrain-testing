@@ -1,0 +1,24 @@
+name: Get workflow context from OIDC token
+
+permissions:
+  id-token: write
+
+outputs:
+  ref: ${{ steps.context.outputs.ref }}
+  sha: ${{ steps.context.outputs.sha }}
+  repository: ${{ steps.context.outputs.repository }}
+
+runs:
+  using: composite
+  steps:
+    - id: context
+      uses: actions/github-script@v6
+      with:
+        script: |
+          let idToken = await core.getIDToken();
+          let unvalidatedClaims = JSON.parse(atob(idToken.split(".", 2)[1]));
+          console.log(unvalidatedClaims);
+
+          core.setOutput("ref", unvalidatedClaims.job_workflow_ref);
+          core.setOutput("sha", unvalidatedClaims.job_workflow_sha);
+          core.setOutput("repository", unvalidatedClaims.job_workflow_ref.replace(/\/\.github\/.*$/, ""));

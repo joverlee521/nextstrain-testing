@@ -19,24 +19,13 @@ env:
 jobs:
   get-ref:
     runs-on: ubuntu-latest
-    env:
-      GH_TOKEN: ${{ github.token }}
+    permissions:
+      id-token: write
     steps:
-      - id: ref
-        name: Get reusable workflow ref via API
-        run: >
-          sha="$(gh api \
-              -H 'Accept: application/vnd.github+json' \
-              repos/joverlee521/nextstrain-testing/actions/runs/${{ github.run_id }} \
-            | jq --raw-output '
-                .referenced_workflows
-              | map(select(.path
-              | contains("joverlee521/nextstrain-testing/.github/workflows/test-reusable.yaml")))
-              | .[0].sha')"
-
-          echo sha="$sha" | tee -a "$GITHUB_OUTPUT"
+      - id: workflow-context
+        uses: joverlee521/nextstrain-testing/actions/workflow-context@main
     outputs:
-      sha: ${{ steps.ref.outputs.sha }}
+      sha: ${{ steps.workflow-context.outputs.sha }}
 
   run:
     needs: get-ref
