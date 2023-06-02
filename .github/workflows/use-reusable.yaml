@@ -15,7 +15,7 @@ jobs:
     secrets: inherit
 
   run-reusable-2:
-    uses: joverlee521/nextstrain-testing/.github/workflows/test-reusable.yaml@835f39783b47e735e678fcd05b86fb336be8a12b
+    uses: joverlee521/nextstrain-testing/.github/workflows/test-reusable.yaml@981e0ac150721a59db7ee2b4b4b208d22b749c31
     with:
       env: |
         NEXTSTRAIN_DOCKER_IMAGE: nextstrain/base:latest
