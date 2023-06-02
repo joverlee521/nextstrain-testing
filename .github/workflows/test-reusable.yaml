@@ -23,7 +23,7 @@ jobs:
       id-token: write
     steps:
       - id: workflow-context
-        uses: joverlee521/nextstrain-testing/actions/workflow-context@main
+        uses: joverlee521/nextstrain-testing/actions/workflow-context@HEAD
     outputs:
       sha: ${{ steps.workflow-context.outputs.sha }}
 
