@@ -22,6 +22,8 @@ jobs:
       runtime-envvar-names: BOGUS_SLACK_TOKEN
       cpus: ${{ false || null }}
       artifact-paths: |
-        - env.d/
-        - auspice/
+        env.d/
+        auspice/
+        results/
+        logs/
     secrets: inherit

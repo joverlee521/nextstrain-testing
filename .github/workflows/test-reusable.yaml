@@ -106,9 +106,21 @@ jobs:
         run: augur --version
 
       - if: always()
+        id: prefix-paths
+        env:
+          BUILD_DIR: build-dir
+        name: Add ${{ env.BUILD_DIR }} prefix to artifact paths
+        run: |
+          prefixed_paths=$(yq '. | trim | split("\n") | .[] |= env(BUILD_DIR) + "/" + . | join("\n")' <<< ${{ inputs.artifact-paths }})
+
+          echo "paths=$prefixed_paths" >> $GITHUB_OUTPUT
+
+      - if: always()
         uses: actions/upload-artifact@v3
+
         with:
           name: output
           path: |
             build.log
+            ${{ steps.prefix-paths.outputs.paths }}
             !${{ env.ENVDIR }}
