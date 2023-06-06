@@ -15,6 +15,10 @@ on:
       memory:
         type: string
         required: false
+      cpus:
+        type: number
+        default: 2
+        required: false
 
 env:
   ENVDIR: env.d
@@ -83,12 +87,14 @@ jobs:
 
       - name: Run build
         env:
+          cpus: ${{ inputs.cpus }}
           memory: ${{ inputs.memory }}
           detach: ${{ inputs.runtime == 'aws-batch' || null }}
         run: |
           set -x
 
           nextstrain build \
+            --cpus "$cpus" \
             ${memory:+--memory="$memory"} \
             ${detach:+--detach} \
             --exec env . \
