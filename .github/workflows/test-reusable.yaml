@@ -90,7 +90,6 @@ jobs:
 
           nextstrain build \
             ${memory:+--memory="$memory"} \
-            "$detach" \
             --exec env . \
             envdir ${{ env.ENVDIR }} printenv ${{ inputs.runtime-envvar-names }} \
           | tee build.log
