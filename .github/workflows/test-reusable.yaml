@@ -111,7 +111,7 @@ jobs:
           BUILD_DIR: build-dir
         name: Add ${{ env.BUILD_DIR }} prefix to artifact paths
         run: |
-          prefixed_paths=$(yq '. | trim | split("\n") | .[] |= env(BUILD_DIR) + "/" + . | join("\n")' <<< ${{ inputs.artifact-paths }})
+          prefixed_paths=$(yq '. | trim | split("\n") | .[] |= env(BUILD_DIR) + "/" + . | join("\n")' <<< "${{ inputs.artifact-paths }}")
 
           echo "paths=$prefixed_paths" >> $GITHUB_OUTPUT
 
