@@ -112,9 +112,17 @@ jobs:
           paths: ${{ inputs.artifact-paths }}
         name: Add ${{ env.BUILD_DIR }} prefix to artifact paths
         run: |
-          prefixed_paths=$(yq -n 'strenv(paths) | trim | split("\n") | .[] |= env(BUILD_DIR) + "/" + . | join("\n")')
+          prefixed_paths=$(yq -n '
+              strenv(paths)
+            | trim
+            | split("\n")
+            | .[] |= env(BUILD_DIR) + "/" + .
+            | join("\n")
+          ')
 
-          echo "paths=$prefixed_paths" >> $GITHUB_OUTPUT
+          echo "paths<<__EOF__" >> $GITHUB_OUTPUT
+          echo "$prefixed_paths" >> $GITHUB_OUTPUT
+          echo "__EOF__" >> $GITHUB_OUTPUT
 
       - if: always()
         uses: actions/upload-artifact@v3
