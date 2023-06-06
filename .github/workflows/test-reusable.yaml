@@ -84,13 +84,13 @@ jobs:
       - name: Run build
         env:
           memory: ${{ inputs.memory }}
-          detach: ${{ inputs.runtime == 'aws-batch' && '--detach' || null }}
+          detach: ${{ inputs.runtime == 'aws-batch' || null }}
         run: |
           set -x
 
           nextstrain build \
             ${memory:+--memory="$memory"} \
-            "$detach" \
+            ${detach:+--detach} \
             --exec env . \
             envdir ${{ env.ENVDIR }} printenv ${{ inputs.runtime-envvar-names }} \
           | tee build.log
