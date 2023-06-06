@@ -63,10 +63,6 @@ jobs:
         with:
           runtime: conda
 
-      - name: Install envdir
-        shell: nextstrain shell . {0}
-        run: pip install envdir
-
       - if: inputs.env
         name: Set environment variables
         env:
