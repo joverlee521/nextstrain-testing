@@ -205,7 +205,6 @@ jobs:
           # shellcheck disable=SC2154
 
           echo "$secrets"
-          | jq 'del(.github_token)'
           | ./bin/json-to-envvars
           | tee -a "$GITHUB_ENV"
 
@@ -217,7 +216,7 @@ jobs:
           # shellcheck disable=SC2154
 
           envvars=$(echo "$env" | yq 'keys | join(" ")')
-          secrets=$(echo "$secrets" | jq 'keys | join(" ")')
+          secrets=$(echo "$secrets" | jq 'del(.github_token) | keys | join(" ")')
 
           # read exits with 1 when it encounters EOF
           read -a varnames -r -d $'\0' <<<"$envvars $secrets" || true
