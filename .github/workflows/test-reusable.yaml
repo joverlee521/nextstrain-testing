@@ -210,8 +210,8 @@ jobs:
 
       - name: Set build runtime environment variables
         env:
-          env: ${{ inputs.env }}
-          secrets: ${{ toJson(secrets) }}
+          env: ${{ inputs.env || '[]' }}
+          secrets: ${{ toJson(secrets) || '' }}
         run: |
           # shellcheck disable=SC2154
 
