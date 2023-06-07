@@ -164,11 +164,11 @@ jobs:
     needs: workflow-context
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout ${{ needs.workflow-context.outputs.repository }} (sha ${{ needs.workflow-context.outputs.sha }})
+      - name: Checkout nextstrain/.github@run-build-workflow
         uses: actions/checkout@v3
         with:
-          repository: ${{ needs.workflow-context.outputs.repository }}
-          ref: ${{ needs.workflow-context.outputs.sha }}
+          repository: nextstrain/.github
+          ref: run-build-workflow
 
       - name: Setup runtime ${{ inputs.runtime }}
         uses: ./actions/setup-nextstrain-cli
