@@ -13,3 +13,7 @@ jobs:
         results/
         logs/
         .snakemake/log/
+      env: |
+        NEXTSTRAIN_DOCKER_IMAGE: BOGUS_IMAGE
+    secrets:
+      SLACK_TOKEN: BOGUS_TOKEN
