@@ -4,17 +4,6 @@ on: workflow_dispatch
 
 jobs:
   run-reusable:
-    uses: joverlee521/nextstrain-testing/.github/workflows/test-reusable.yaml@68cd9aa02d961fe258dff0ed7368473ecec6c921
-    with:
-      env: |
-        NEXTSTRAIN_DOCKER_IMAGE: nextstrain/base:latest
-      runtime-envvar-names: BOGUS_SLACK_TOKEN
-      artifact-paths: |
-        - env.d/
-        - auspice/
-    secrets: inherit
-
-  run-reusable-2:
     uses: joverlee521/nextstrain-testing/.github/workflows/test-reusable.yaml@main
     with:
       env: |
