@@ -242,11 +242,7 @@ jobs:
 
       - name: List all files
         run: |
-          ls -la
-
-          ls -la $BUILD_DIR
-
-          ls -la $BUILD_DIR/.snakemake
+          ls -la $BUILD_DIR/.snakemake/log
 
       - if: ${{ inputs.runtime == 'aws-batch' }}
         name: Get AWS Batch job id

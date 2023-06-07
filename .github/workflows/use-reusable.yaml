@@ -26,4 +26,5 @@ jobs:
         auspice/
         results/
         logs/
+        .snakemake/log/
     secrets: inherit
