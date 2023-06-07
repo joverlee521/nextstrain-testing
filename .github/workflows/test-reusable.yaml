@@ -120,11 +120,7 @@ jobs:
             | join("\n")
           ')
 
-          {
-            echo "paths<<__EOF__"
-            echo "$prefixed_paths"
-            echo "__EOF__"
-          } >> "$GITHUB_OUTPUT"
+          printf "paths<<__EOF__\n$prefixed_paths\n__EOF__\n" >> "$GITHUB_OUTPUT"
 
       - if: always()
         uses: actions/upload-artifact@v3
