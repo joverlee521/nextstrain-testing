@@ -151,19 +151,19 @@ env:
   ENV_DIR: env.d
 
 jobs:
-  workflow-context:
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-    steps:
-      - id: workflow-context
-        uses: nextstrain/.github/actions/workflow-context@run-build-workflow
-    outputs:
-      repository: ${{ steps.workflow-context.outputs.repository }}
-      sha: ${{ steps.workflow-context.outputs.sha }}
+  # workflow-context:
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     id-token: write
+  #   steps:
+  #     - id: workflow-context
+  #       uses: nextstrain/.github/actions/workflow-context@run-build-workflow
+  #   outputs:
+  #     repository: ${{ steps.workflow-context.outputs.repository }}
+  #     sha: ${{ steps.workflow-context.outputs.sha }}
 
   run-build:
-    needs: workflow-context
+    # needs: workflow-context
     runs-on: ubuntu-latest
     steps:
       - name: Checkout nextstrain/.github@run-build-workflow
