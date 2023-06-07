@@ -138,7 +138,7 @@ on:
         description: AWS secret access key, required for aws-batch runtime only
         required: false
 
-      GITHUB_TOKEN:
+      GITHUB_PAT:
         description: GitHub personal access token, required for additional permissions such as dispatching cross repo workflows
         required: false
 
