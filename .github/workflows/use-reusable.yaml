@@ -15,5 +15,7 @@ jobs:
         .snakemake/log/
       env: |
         NEXTSTRAIN_DOCKER_IMAGE: BOGUS_IMAGE
+        WHATEVER_ENV: WHATEVER_VALUE
     secrets:
+      GITHUB_PAT: BOGUS_GITHUB_PAT
       SLACK_TOKEN: BOGUS_TOKEN
