@@ -240,6 +240,14 @@ jobs:
               ${{ inputs.build-args }} \
           | tee build.log
 
+      - name: List all files
+        run: |
+          ls -la
+
+          ls -la $BUILD_DIR
+
+          ls -la $BUILD_DIR/.snakemake
+
       - if: ${{ inputs.runtime == 'aws-batch' }}
         name: Get AWS Batch job id
         id: aws-batch
