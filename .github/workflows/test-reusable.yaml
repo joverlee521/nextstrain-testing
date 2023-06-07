@@ -172,14 +172,14 @@ jobs:
           repository: nextstrain/.github
           ref: run-build-workflow
 
-      - name: Setup runtime ${{ inputs.runtime }}
-        uses: ./actions/setup-nextstrain-cli
-        with:
-          runtime: ${{ inputs.runtime }}
-        # Required to set up aws-batch as default runtime
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      # - name: Setup runtime ${{ inputs.runtime }}
+      #   uses: ./actions/setup-nextstrain-cli
+      #   with:
+      #     runtime: ${{ inputs.runtime }}
+      #   # Required to set up aws-batch as default runtime
+      #   env:
+      #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Checkout build repository
         uses: actions/checkout@v3
@@ -223,43 +223,43 @@ jobs:
           read -a varnames -r -d $'\0' <<<"$envvars $secrets" || true
           ./bin/write-envdir "$BUILD_DIR/$ENV_DIR" "${varnames[@]}"
 
-      - name: Run build via ${{ inputs.runtime }}
-        env:
-          cpus: ${{ inputs.cpus }}
-          memory: ${{ inputs.memory }}
-          detach: ${{ inputs.runtime == 'aws-batch' || null }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: |
-          # shellcheck disable=SC2154
-          set -x
+      # - name: Run build via ${{ inputs.runtime }}
+      #   env:
+      #     cpus: ${{ inputs.cpus }}
+      #     memory: ${{ inputs.memory }}
+      #     detach: ${{ inputs.runtime == 'aws-batch' || null }}
+      #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #   run: |
+      #     # shellcheck disable=SC2154
+      #     set -x
 
-          nextstrain build \
-            --cpus "$cpus" \
-            ${memory:+--memory="$memory"} \
-            ${detach:+--detach} \
-            --exec env \
-            "$BUILD_DIR" \
-              envdir "$ENV_DIR" snakemake \
-              --cores "$cpus" \
-              ${{ inputs.build-args }} \
-          | tee build.log
+      #     nextstrain build \
+      #       --cpus "$cpus" \
+      #       ${memory:+--memory="$memory"} \
+      #       ${detach:+--detach} \
+      #       --exec env \
+      #       "$BUILD_DIR" \
+      #         envdir "$ENV_DIR" snakemake \
+      #         --cores "$cpus" \
+      #         ${{ inputs.build-args }} \
+      #     | tee build.log
 
-      - name: List all files
-        run: |
-          ls -la $BUILD_DIR/.snakemake/log
+      # - name: List all files
+      #   run: |
+      #     ls -la $BUILD_DIR/.snakemake/log
 
-      - if: ${{ inputs.runtime == 'aws-batch' }}
-        name: Get AWS Batch job id
-        id: aws-batch
-        run: |
-          echo "AWS_BATCH_JOB_ID=$(tail -n1 build.log | sed -nE 's/.+attach ([-a-f0-9]+).+/\1/p')" >> "$GITHUB_ENV"
+      # - if: ${{ inputs.runtime == 'aws-batch' }}
+      #   name: Get AWS Batch job id
+      #   id: aws-batch
+      #   run: |
+      #     echo "AWS_BATCH_JOB_ID=$(tail -n1 build.log | sed -nE 's/.+attach ([-a-f0-9]+).+/\1/p')" >> "$GITHUB_ENV"
 
-      - if: env.AWS_BATCH_JOB_ID
-        name: Generate AWS Batch summary
-        run: |
-          ./bin/interpolate-env < ./text-templates/attach-aws-batch.md \
-          > "$GITHUB_STEP_SUMMARY"
+      # - if: env.AWS_BATCH_JOB_ID
+      #   name: Generate AWS Batch summary
+      #   run: |
+      #     ./bin/interpolate-env < ./text-templates/attach-aws-batch.md \
+      #     > "$GITHUB_STEP_SUMMARY"
 
       - if: always()
         id: prefix-paths
