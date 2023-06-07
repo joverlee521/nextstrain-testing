@@ -205,6 +205,7 @@ jobs:
           # shellcheck disable=SC2154
 
           echo "$secrets"
+          | jq 'del(.github_token)'
           | ./bin/json-to-envvars
           | tee -a "$GITHUB_ENV"
 
