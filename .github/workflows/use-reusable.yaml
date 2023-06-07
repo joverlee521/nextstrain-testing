@@ -20,6 +20,7 @@ jobs:
       env: |
         NEXTSTRAIN_DOCKER_IMAGE: nextstrain/base:latest
       runtime-envvar-names: BOGUS_SLACK_TOKEN
+      repo: zika-tutorial
       artifact-paths: |
         env.d/
         auspice/
