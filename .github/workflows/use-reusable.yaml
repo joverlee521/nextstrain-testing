@@ -16,4 +16,3 @@ jobs:
         results/
         logs/
         .snakemake/log/
-    secrets: inherit
