@@ -214,6 +214,7 @@ jobs:
           secrets: ${{ toJson(secrets) || '' }}
         run: |
           # shellcheck disable=SC2154
+          set -x
 
           envvars=$(echo "$env" | yq 'keys | join(" ")')
           secrets=$(echo "$secrets" | jq 'del(.github_token) | keys | join(" ")')
