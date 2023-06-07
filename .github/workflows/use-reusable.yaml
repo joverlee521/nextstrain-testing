@@ -6,9 +6,6 @@ jobs:
   run-reusable:
     uses: joverlee521/nextstrain-testing/.github/workflows/test-reusable.yaml@main
     with:
-      env: |
-        NEXTSTRAIN_DOCKER_IMAGE: nextstrain/base:latest
-      runtime-envvar-names: BOGUS_SLACK_TOKEN
       repo: nextstrain/zika-tutorial
       artifact-paths: |
         env.d/
