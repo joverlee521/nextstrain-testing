@@ -1,0 +1,18 @@
+config["module_basedir"] = f"{workflow.current_basedir}/module"
+
+module module_workflow:
+    snakefile:"module/Snakefile"
+    config: config
+    prefix: "module"
+
+use rule * from module_workflow as module_*
+
+
+rule all:
+    input:
+        rules.module_all.input
+    shell:
+        """
+        echo "$PWD"
+        ./module/bin/hello
+        """

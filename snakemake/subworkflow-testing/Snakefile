@@ -1,0 +1,14 @@
+subworkflow subworkflow_workflow:
+    workdir: "subworkflow"
+    snakefile:"subworkflow/Snakefile"
+
+
+rule all:
+    input:
+        subworkflow_workflow("results/use_shell.txt"),
+        subworkflow_workflow("results/use_script.txt")
+    shell:
+        """
+        echo "$PWD"
+        ./subworkflow/bin/hello
+        """

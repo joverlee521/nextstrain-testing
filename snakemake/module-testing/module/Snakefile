@@ -1,0 +1,20 @@
+
+rule all:
+    input:
+        "results/use_shell.txt",
+        "results/use_script.txt"
+
+rule use_shell:
+    output: "results/use_shell.txt"
+    params:
+        basedir = workflow.current_basedir
+    shell:
+        """
+        echo "$PWD"
+        {config[module_basedir]}/bin/hello > {output}
+        """
+
+rule use_script:
+    output:
+        test = "results/use_script.txt"
+    script: "bin/hello.sh"
