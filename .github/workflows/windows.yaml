@@ -10,3 +10,6 @@ jobs:
 
       - name: Test bash script
         run: bash ./bin/hello-world.sh
+
+      - name: Test bash script w/o extension
+        run: bash ./bin/hello-world
