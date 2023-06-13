@@ -17,3 +17,19 @@ jobs:
       - name: Test pwsh with -file
         shell: pwsh -file ". '{0}'"
         run: ./bin/hello-world.sh
+
+  test-os-matrix:
+    name: Test ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - run: bash ./bin/hello-world
