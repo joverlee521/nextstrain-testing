@@ -13,3 +13,7 @@ jobs:
 
       - name: Test bash script w/o extension
         run: bash ./bin/hello-world
+
+      - name: Test pwsh with -file
+        shell: pwsh -file ". '{0}'"
+        run: ./bin/hello-world.sh
