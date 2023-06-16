@@ -1,0 +1,72 @@
+"""
+Snakemake will remove temp files immediate that are not used in downstream rules:
+
+Job stats:
+job      count    min threads    max threads
+-----  -------  -------------  -------------
+a            1              1              1
+all          1              1              1
+b            1              1              1
+total        3              1              1
+
+Select jobs to execute...
+
+[Fri Jun 16 18:55:22 2023]
+localrule a:
+    output: results/a0.txt, results/a1.txt, results/a2.txt, results/a3.txt, results/a4.txt
+    jobid: 2
+    reason: Forced execution
+    resources: tmpdir=/tmp
+
+Touching output file results/a0.txt.
+Touching output file results/a1.txt.
+Touching output file results/a2.txt.
+Touching output file results/a3.txt.
+Touching output file results/a4.txt.
+[Fri Jun 16 18:55:22 2023]
+Finished job 2.
+1 of 3 steps (33%) done
+Removing temporary output results/a0.txt.
+Removing temporary output results/a2.txt.
+Removing temporary output results/a3.txt.
+Removing temporary output results/a4.txt.
+Select jobs to execute...
+
+[Fri Jun 16 18:55:22 2023]
+localrule b:
+    input: results/a1.txt
+    output: results/b.txt
+    jobid: 1
+    reason: Input files updated by another job: results/a1.txt
+    resources: tmpdir=/tmp
+
+Touching output file results/b.txt.
+[Fri Jun 16 18:55:22 2023]
+Finished job 1.
+2 of 3 steps (67%) done
+Removing temporary output results/a1.txt.
+Select jobs to execute...
+
+[Fri Jun 16 18:55:22 2023]
+localrule all:
+    input: results/b.txt
+    jobid: 0
+    reason: Input files updated by another job: results/b.txt
+    resources: tmpdir=/tmp
+
+[Fri Jun 16 18:55:22 2023]
+Finished job 0.
+3 of 3 steps (100%) done
+Complete log: .snakemake/log/2023-06-16T185521.968045.snakemake.log
+"""
+rule all:
+    input:
+        "results/b.txt"
+
+
+rule a:
+    output: temp(touch((f"results/a{n}.txt") for n in range(5)))
+
+rule b:
+    input: "results/a1.txt"
+    output: touch("results/b.txt")
