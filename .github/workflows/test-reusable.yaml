@@ -3,6 +3,10 @@
 # workflow) in this repo for an example of what the caller workflow looks like.
 name: Pathogen repo build
 
+defaults:
+  run:
+    shell: bash
+
 on:
   workflow_call:
     inputs:
