@@ -175,7 +175,8 @@ jobs:
         with:
           repository: nextstrain/.github
           ref: run-build-workflow
-          path: ../nextstrain-github
+
+      - run: mv .github ../nextstrain-github
 
       - name: Setup runtime ${{ inputs.runtime }}
         uses: ./actions/setup-nextstrain-cli
