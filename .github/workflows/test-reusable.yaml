@@ -175,23 +175,20 @@ jobs:
         with:
           repository: nextstrain/.github
           ref: run-build-workflow
-          path: ./nextstrain-github
+          path: nextstrain-github
 
-      - run: echo "$RUNNER_TEMP"
+      - run: |
+          mv nextstrain-github ..
+          ls -l ../nextstrain-github
 
       - name: Setup runtime ${{ inputs.runtime }}
-        uses: ./nextstrain-github/actions/setup-nextstrain-cli
+        uses: ../nextstrain-github/actions/setup-nextstrain-cli
         with:
           runtime: ${{ inputs.runtime }}
         # Required to set up aws-batch as default runtime
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
-      # Must be after all `uses` of nextstrain-github actions since `uses` does not accept the RUNNER_TEMP envvar
-      - run: |
-          mv nextstrain-github/ "$RUNNER_TEMP"
-          ls -l "$RUNNER_TEMP"/nextstrain-github/
 
       - name: Checkout build repository
         uses: actions/checkout@v3
@@ -206,7 +203,7 @@ jobs:
           # shellcheck disable=SC2154
 
           echo "$env"
-          | "$RUNNER_TEMP"/nextstrain-github/bin/yaml-to-envvars
+          | ../nextstrain-github/bin/yaml-to-envvars
           | tee -a "$GITHUB_ENV"
 
       - name: Set secrets as environment variables
@@ -216,7 +213,7 @@ jobs:
           # shellcheck disable=SC2154
 
           echo "$secrets"
-          | "$RUNNER_TEMP"/nextstrain-github/bin/json-to-envvars
+          | ../nextstrain-github/bin/json-to-envvars
           | tee -a "$GITHUB_ENV"
 
       - name: Set build runtime environment variables
@@ -232,7 +229,7 @@ jobs:
 
           # read exits with 1 when it encounters EOF
           read -a varnames -r -d $'\0' <<<"$envvars $secrets" || true
-          "$RUNNER_TEMP"/nextstrain-github/bin/write-envdir "$ENV_DIR" "${varnames[@]}"
+          ../nextstrain-github/bin/write-envdir "$ENV_DIR" "${varnames[@]}"
 
       - name: Run build via ${{ inputs.runtime }}
         env:
