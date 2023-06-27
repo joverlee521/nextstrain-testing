@@ -175,16 +175,18 @@ jobs:
         with:
           repository: nextstrain/.github
           ref: run-build-workflow
-          path: ~/nextstrain/.github
+        env:
+          GITHUB_WORKSPACE: /tmp/nextstrain
 
       - name: Setup runtime ${{ inputs.runtime }}
-        uses: ~/nextstrain/.github/actions/setup-nextstrain-cli
+        uses: ./.github/actions/setup-nextstrain-cli
         with:
           runtime: ${{ inputs.runtime }}
         # Required to set up aws-batch as default runtime
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          GITHUB_WORKSPACE: /tmp/nextstrain
 
       - name: Checkout build repository
         uses: actions/checkout@v3
@@ -199,7 +201,7 @@ jobs:
           # shellcheck disable=SC2154
 
           echo "$env"
-          | ~/nextstrain/.github/bin/yaml-to-envvars
+          | /tmp/nextstrain/.github/bin/yaml-to-envvars
           | tee -a "$GITHUB_ENV"
 
       - name: Set secrets as environment variables
@@ -209,7 +211,7 @@ jobs:
           # shellcheck disable=SC2154
 
           echo "$secrets"
-          | ~/nextstrain/.github/bin/json-to-envvars
+          | /tmp/nextstrain/.github/bin/json-to-envvars
           | tee -a "$GITHUB_ENV"
 
       - name: Set build runtime environment variables
@@ -225,7 +227,7 @@ jobs:
 
           # read exits with 1 when it encounters EOF
           read -a varnames -r -d $'\0' <<<"$envvars $secrets" || true
-          ~/nextstrain/.github/bin/write-envdir "$ENV_DIR" "${varnames[@]}"
+          /tmp/nextstrain/.github/bin/write-envdir "$ENV_DIR" "${varnames[@]}"
 
       - name: Run build via ${{ inputs.runtime }}
         env:
