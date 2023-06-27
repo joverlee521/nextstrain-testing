@@ -300,3 +300,5 @@ jobs:
             build.log
             ${{ inputs.artifact-paths }}
             !${{ env.ENV_DIR }}
+
+      - run: mv /tmp/nextstrain/.github ./nextstrain-github
