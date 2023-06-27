@@ -175,20 +175,20 @@ jobs:
         with:
           repository: nextstrain/.github
           ref: run-build-workflow
-
-      - run: |
-          mkdir /tmp/nextstrain/
-          mv ./.github /tmp/nextstrain/.github
-          ls -l /tmp/nextstrain/.github
+          path: nextstrain-github
 
       - name: Setup runtime ${{ inputs.runtime }}
-        uses: /tmp/nextstrain/.github/actions/setup-nextstrain-cli
+        uses: ./nextstrain-github/actions/setup-nextstrain-cli
         with:
           runtime: ${{ inputs.runtime }}
         # Required to set up aws-batch as default runtime
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - run: |
+          mkdir /tmp/nextstrain/
+          mv ./nextstrain-github /tmp/nextstrain/.github
 
       - name: Checkout build repository
         uses: actions/checkout@v3
