@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo "This script will exit with code 1" >&2
+exit 1

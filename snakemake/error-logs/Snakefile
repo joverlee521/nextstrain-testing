@@ -1,0 +1,17 @@
+"""
+If the rule has a `log` file then can run Snakemake with `--show-failed-logs` to
+include the failed rule logs in the Snakemake logs
+"""
+rule all:
+    input: "results/a.txt"
+
+rule a:
+    output: "results/a.txt"
+    log: "logs/a.log"
+    shell:
+        """
+        ./error-script 2> {log}
+        """
+
+onerror:
+    shell("cat < {log}")
