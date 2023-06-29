@@ -1,0 +1,5 @@
+channels:
+  - nextstrain
+
+dependencies:
+  - nextstrain-base

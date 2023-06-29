@@ -1,0 +1,6 @@
+#!/bin/bash
+
+echo "Fetching from GenBank" >&2
+echo "Fetch param ${1}" >&2
+
+echo "Fetched output"

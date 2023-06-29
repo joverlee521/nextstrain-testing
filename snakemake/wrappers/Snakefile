@@ -1,0 +1,15 @@
+rule all:
+    input: "results/final.txt"
+
+
+rule fetch:
+    output: "results/fetch.txt"
+    log: "logs/fetch.log"
+    params:
+        fetch_param="123"
+    wrapper:
+        "file:wrappers/fetch"
+
+rule final:
+    input: "results/fetch.txt"
+    output: touch("results/final.txt")
