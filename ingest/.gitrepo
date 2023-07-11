@@ -5,8 +5,8 @@
 ;
 [subrepo]
 	remote = git@github.com:nextstrain/ingest.git
-	branch = main
-	commit = 92a8868208cf783435bb901424f8976931b0cd0f
-	parent = 0ba7fdd482fff0b8ea6f38af87bd2382e4d1e2d4
+	branch = apply-geolocation-rules
+	commit = 5afbcc788de7a54aafebcc0e2c701d81176a046a
+	parent = 316f8586ad93a0b2fdfea01f82b9d47662c7cada
 	method = merge
 	cmdver = 0.4.6
