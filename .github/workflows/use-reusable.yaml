@@ -3,20 +3,44 @@ name: Use reusable
 on: workflow_dispatch
 
 jobs:
-  run-reusable:
+  run-reusable-literal-keep:
+      uses: joverlee521/nextstrain-testing/.github/workflows/test-reusable.yaml@main
+      with:
+        run: |+
+          echo "run reusable literal keep"
+
+
+
+
+  run-reusable-literal-clip:
     uses: joverlee521/nextstrain-testing/.github/workflows/test-reusable.yaml@main
     with:
-      repo: nextstrain/zika-tutorial
-      runtime: conda
-      artifact-paths: |
-        env.d/
-        auspice/
-        results/
-        logs/
-        .snakemake/log/
-      env: |
-        NEXTSTRAIN_DOCKER_IMAGE: BOGUS_IMAGE
-        WHATEVER_ENV: WHATEVER_VALUE
-    secrets:
-      GITHUB_PAT: BOGUS_GITHUB_PAT
-      SLACK_TOKEN: BOGUS_TOKEN
+      run: |
+        echo "run reusable literal clip"
+
+  run-reusable-literal-strip:
+    uses: joverlee521/nextstrain-testing/.github/workflows/test-reusable.yaml@main
+    with:
+      run: |-
+        echo "run reusable literal strip"
+
+  run-reusable-folded-keep:
+    uses: joverlee521/nextstrain-testing/.github/workflows/test-reusable.yaml@main
+    with:
+      run: |+
+        echo "run reusable literal keep"
+
+
+
+
+  run-reusable-folded-clip:
+    uses: joverlee521/nextstrain-testing/.github/workflows/test-reusable.yaml@main
+    with:
+      run: >
+        echo "run reusable folded clip"
+
+  run-reusable-folded-strip:
+    uses: joverlee521/nextstrain-testing/.github/workflows/test-reusable.yaml@main
+    with:
+      run: >-
+        echo "run reusable folded"
