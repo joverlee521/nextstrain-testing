@@ -15,8 +15,7 @@ jobs:
         run: |
           set -x
 
-          ${{ inputs.run }} \
-          |& tee build.log
+          eval "${{ inputs.run }}" |& tee build.log
 
       - uses: actions/upload-artifact@v3
         with:
