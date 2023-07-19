@@ -12,10 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run input command
-        run: >
+        run: |
           set -x
 
-          ${{ inputs.run }} |& tee build.log
+          ${{ inputs.run }} \
+          |& tee build.log
 
       - uses: actions/upload-artifact@v3
         with:
