@@ -1,0 +1,16 @@
+name: Job dependencies
+
+on: workflow_dispatch
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - run: exit 1
+
+  job2:
+    if: ${{ failure() }}
+    needs: [job1]
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "job1 errored"
