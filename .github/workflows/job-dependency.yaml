@@ -8,9 +8,21 @@ jobs:
     steps:
       - run: exit 1
 
-  job2:
+  notify-failure:
     if: ${{ failure() }}
     needs: [job1]
     runs-on: ubuntu-latest
     steps:
-      - run: echo "job1 errored"
+    - uses: actions/checkout@v3
+      with:
+        repository: nextstrain/ingest
+        ref: notify-slack
+        sparse-checkout: |
+          notify-on-job-fail
+
+    - name: Notify job failed
+      run: ./notify-on-job-fail "Test" "test"
+      env:
+        GITHUB_RUN_ID: ${{ github.run_id }}
+        SLACK_TOKEN: test-token
+        SLACK_CHANNELS: test-channel
