@@ -18,4 +18,3 @@ jobs:
       with:
         slack_token: "test-token"
         slack_channel: "test-channel"
-        job_name: "Test"

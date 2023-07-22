@@ -1,19 +1,20 @@
-name: Notify Slack on job fail
+name: Notify Slack on failure
 description: >-
   Sends Slack notification with link to a GitHub Action workflow run that failed.
 
   Intended to be used for automated pathogen build workflows to ensure that the
-  entire team is notified of the failure and not just the GitHub user who
-  originally launched the workflow.
+  entire team is notified of a GitHub Action failure and not just the GitHub
+  user who originally launched and/or scheduled the workflow.
 
 inputs:
   slack_token:
+    description: >-
+      OAuth token for the Slack App that has permissions to send messages.
     type: string
     required: true
   slack_channel:
-    type: string
-    required: true
-  job_name:
+    description: >-
+      The name or channel id for the intended Slack channel.
     type: string
     required: true
 
@@ -31,10 +32,10 @@ runs:
 
   - name: Notify job failure
     shell: bash
-    run: ./nextstrain-ingest/notify-on-job-fail "$JOB_NAME" "$JOB_REPO"
+    run: ./nextstrain-ingest/notify-on-job-fail "$WORKFLOW_NAME" "$JOB_REPO"
     env:
       GITHUB_RUN_ID: ${{ github.run_id }}
       SLACK_TOKEN: ${{ inputs.slack_token }}
       SLACK_CHANNELS: ${{ inputs.slack_channel }}
-      JOB_NAME: ${{ inputs.job_name }}
+      WORKFLOW_NAME: ${{ github.workflow }}
       JOB_REPO: ${{ github.event.repository.name }}
