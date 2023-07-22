@@ -14,15 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+    - uses: ./actions/notify-on-failure
       with:
-        repository: nextstrain/ingest
-        ref: notify-slack
-        sparse-checkout: |
-          notify-on-job-fail
-
-    - name: Notify job failed
-      run: ./notify-on-job-fail "Test" "test"
-      env:
-        GITHUB_RUN_ID: ${{ github.run_id }}
-        SLACK_TOKEN: test-token
-        SLACK_CHANNELS: test-channel
+        slack_token: "test-token"
+        slack_channel: "test-channel"
+        job_name: "Test"
