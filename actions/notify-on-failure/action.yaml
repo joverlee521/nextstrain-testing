@@ -25,12 +25,13 @@ runs:
     with:
       repository: nextstrain/ingest
       ref: notify-slack
+      path: nextstrain-ingest
       sparse-checkout: |
         notify-on-job-fail
 
   - name: Notify job failure
     shell: bash
-    run: ./notify-on-job-fail "$JOB_NAME" "$JOB_REPO"
+    run: ./nextstrain-ingest/notify-on-job-fail "$JOB_NAME" "$JOB_REPO"
     env:
       GITHUB_RUN_ID: ${{ github.run_id }}
       SLACK_TOKEN: ${{ inputs.slack_token }}
