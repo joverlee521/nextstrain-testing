@@ -15,6 +15,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: ./actions/notify-on-failure
-      with:
-        slack_token: "test-token"
-        slack_channel: "test-channel"
+      env:
+        SLACK_TOKEN: "test-token"
+        SLACK_CHANNELS: "test-channel"
