@@ -7,17 +7,6 @@ jobs:
     # The `id-token: write` permission is required for this workflow.
     permissions:
       id-token: write
-    uses: nextstrain/.github/.github/workflows/pathogen-repo-build.yaml@master
+    uses: nextstrain/.github/.github/workflows/pathogen-repo-build.yaml@notify-on-failure-action
     with:
       repo: nextstrain/bogus-repo-that-will-fail
-
-  notify-on-failure:
-    needs: run-build
-    if: failure()
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: nextstrain/.github/actions/notify-on-failure@notify-on-failure-action
-        env:
-          SLACK_CHANNELS: ${{ vars.SLACK_CHANNELS }}
-          SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
