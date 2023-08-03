@@ -1,0 +1,16 @@
+name: Pathogen repo build
+
+on: workflow_dispatch
+
+jobs:
+  run-build:
+    # The `id-token: write` permission is required for this workflow.
+    permissions:
+      id-token: write
+    uses: nextstrain/.github/.github/workflows/pathogen-repo-build.yaml@notify-on-failure-action
+    with:
+      repo: nextstrain/bogus-repo-that-will-fail
+      runtime: docker
+      env: |
+        SLACK_CHANNELS: slack-test
+        SLACK_TOKEN: bogus-slack-token
