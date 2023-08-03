@@ -19,5 +19,5 @@ jobs:
       - uses: actions/checkout@v3
       - uses: nextstrain/.github/actions/notify-on-failure@notify-on-failure-action
         env:
-          SLACK_CHANNELS: slack-test
-          SLACK_TOKEN: bogus-slack-token
+          SLACK_CHANNELS: ${{ vars.SLACK_CHANNELS }}
+          SLACK_TOKEN: ${{ secrets.BOGUS_SLACK_TOKEN }}
