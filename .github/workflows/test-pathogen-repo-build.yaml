@@ -20,4 +20,4 @@ jobs:
       - uses: nextstrain/.github/actions/notify-on-failure@notify-on-failure-action
         env:
           SLACK_CHANNELS: ${{ vars.SLACK_CHANNELS }}
-          SLACK_TOKEN: ${{ secrets.BOGUS_SLACK_TOKEN }}
+          SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
