@@ -10,3 +10,4 @@ jobs:
     uses: nextstrain/.github/.github/workflows/pathogen-repo-build.yaml@notify-on-failure-action
     with:
       repo: nextstrain/bogus-repo-that-will-fail
+    secrets: inherit
