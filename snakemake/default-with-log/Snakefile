@@ -1,0 +1,14 @@
+""""
+This does not work with Snakemake 7.24.1 in docker-base runs fine with
+Snakemake 7.28.1 in conda-base.
+
+Tracked down to https://github.com/snakemake/snakemake/issues/2142 which
+has been fixed since Snakemake 7.25.1
+"""
+rule all:
+    input: "results/all.txt"
+    log: "logs/all.log"
+    shell: "echo DONE | tee {log}"
+
+rule a:
+    output: touch("results/all.txt")
