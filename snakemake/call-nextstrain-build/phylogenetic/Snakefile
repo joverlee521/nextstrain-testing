@@ -1,0 +1,18 @@
+"""
+Simulating an independent phylogenetic workflow
+"""
+
+rule all:
+    input: "auspice/tree.json"
+
+# Simulating downloading data from an external source without running ingest
+rule touch_data:
+    output:
+        metadata=touch("phylogenetic/data/metadata.tsv"),
+        sequences=touch("phylogenetic/data/sequences.fasta")
+
+rule export:
+    input:
+        metadata="phylogenetic/data/metadata.tsv",
+        sequences="phylogenetic/data/sequences.fasta"
+    output: touch("auspice/tree.json")

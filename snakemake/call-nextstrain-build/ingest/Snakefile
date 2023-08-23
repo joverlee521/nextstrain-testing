@@ -1,0 +1,14 @@
+"""
+Simulating an independent ingest workflow
+"""
+
+rule all:
+    input:
+        metadata="results/metadata.tsv",
+        sequences="results/sequences.fasta"
+
+
+rule curate:
+    output:
+        metadata=touch("results/metadata.tsv"),
+        sequences=touch("results/sequences.fasta")

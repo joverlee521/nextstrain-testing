@@ -1,0 +1,64 @@
+"""
+Quick test of calling `nextstrain build` within a Snakemake workflow.
+
+Run phylogenetic build without ingest:
+
+    nextstrain build .
+
+Run phylogenetic build _with_ ingest:
+
+    nextstrain build . --config ingest=True
+
+Each workflow can also be run independently:
+
+    nextstrain build ingest
+    nextstrain build phylogenetic
+
+This works as intended, but there's thorny bits of top level Snakemake CLI args
+not being passed to the sub-workflow and probably other pitfalls I haven't considered.
+"""
+
+def _get_phylogenetic_input(w):
+    input = []
+    if config.get("ingest", False):
+        input = [
+            "phylogenetic/data/metadata.tsv",
+            "phylogenetic/data/sequences.fasta"
+        ]
+
+    return input
+
+rule phylogenetic:
+    input: _get_phylogenetic_input
+    output: "phylogenetic/auspice/tree.json"
+    log: "logs/phylogenetic.txt"
+    params:
+        ingest=config.get("run_ingest", False)
+    shell:
+        """
+        nextstrain build --ambient phylogenetic --forceall > {log}
+        """
+
+rule ingest:
+    output:
+        metadata="ingest/results/metadata.tsv",
+        sequences="ingest/results/sequences.fasta"
+    log: "logs/ingest.txt"
+    shell:
+        """
+        nextstrain build --ambient ingest --forceall > {log}
+        """
+
+# Force DAG to include ingest
+rule mv_ingest_output:
+    input:
+        metadata="ingest/results/metadata.tsv",
+        sequences="ingest/results/sequences.fasta"
+    output:
+        metadata="phylogenetic/data/metadata.tsv",
+        sequences="phylogenetic/data/sequences.fasta"
+    shell:
+        """
+        mv {input.metadata} {output.metadata}
+        mv {input.sequences} {output.sequences}
+        """
