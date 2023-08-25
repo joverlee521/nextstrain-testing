@@ -1,6 +1,7 @@
 """
 Simulating an independent ingest workflow
 """
+print(config)
 
 rule all:
     input:

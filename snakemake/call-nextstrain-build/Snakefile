@@ -16,37 +16,64 @@ Each workflow can also be run independently:
 
 This works as intended, but there's thorny bits of top level Snakemake CLI args
 not being passed to the sub-workflow and probably other pitfalls I haven't considered.
+
+Added ability to pass top level config to the individual workflows.
+
+Did some testing of re-running the workflow with `nextstrain build .` and I think
+the behavior is confusing because Snakemake doesn't have insight into partial completions
+of individual workflows. Probably not worth pursuing...
 """
+import json
+import yaml
+
+configfile: "config.yaml"
+
+rule all:
+    input: "phylogenetic/auspice/tree.json"
+
+
+rule top_level_config:
+    output: temp("all_configs.yaml")
+    run:
+        print(config)
+        with open(output[0], 'w') as output_file:
+            yaml.dump(config, output_file, explicit_start = True, explicit_end = True)
+
 
 def _get_phylogenetic_input(w):
-    input = []
+    input = {
+        "configfile": rules.top_level_config.output
+    }
     if config.get("ingest", False):
-        input = [
-            "phylogenetic/data/metadata.tsv",
-            "phylogenetic/data/sequences.fasta"
-        ]
+        input.update({
+            "metadata": "phylogenetic/data/metadata.tsv",
+            "sequences": "phylogenetic/data/sequences.fasta"
+        })
 
     return input
 
+
 rule phylogenetic:
-    input: _get_phylogenetic_input
+    input: unpack(_get_phylogenetic_input)
     output: "phylogenetic/auspice/tree.json"
     log: "logs/phylogenetic.txt"
-    params:
-        ingest=config.get("run_ingest", False)
     shell:
         """
-        nextstrain build --ambient phylogenetic --forceall > {log}
+        cp {input.configfile} phylogenetic/{input.configfile}
+        nextstrain build --ambient phylogenetic --forceall --configfile {input.configfile} > {log}
         """
 
 rule ingest:
+    input:
+        configfile=rules.top_level_config.output
     output:
         metadata="ingest/results/metadata.tsv",
         sequences="ingest/results/sequences.fasta"
     log: "logs/ingest.txt"
     shell:
         """
-        nextstrain build --ambient ingest --forceall > {log}
+        cp {input.configfile} ingest/{input.configfile}
+        nextstrain build --ambient ingest --forceall --configfile {input.configfile} > {log}
         """
 
 # Force DAG to include ingest

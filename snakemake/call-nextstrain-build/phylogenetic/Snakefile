@@ -1,6 +1,7 @@
 """
 Simulating an independent phylogenetic workflow
 """
+print(config)
 
 rule all:
     input: "auspice/tree.json"
