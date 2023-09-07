@@ -1,0 +1,25 @@
+name: Deploy private.nextflu.org
+
+on:
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+    working-directory: auspice
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: blab/nextflu
+          sparse-checkout: |
+            auspice
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '2.3.7'
+          bundler-cache: true
+          working-directory: auspice
+      - run: bundle exec jekyll build
