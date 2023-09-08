@@ -5,6 +5,7 @@ on:
 
 defaults:
   run:
+    shell: bash
     working-directory: auspice
 
 jobs:
@@ -17,10 +18,9 @@ jobs:
           ref: exclude-vendor
           sparse-checkout: |
             auspice
-
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: '2.3.7'
           bundler-cache: true
-
+          working-directory: auspice
       - run: bundle exec jekyll build
