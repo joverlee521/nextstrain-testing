@@ -11,12 +11,11 @@ defaults:
 jobs:
   install:
     runs-on: ubuntu-latest
-    env:
-      BUNDLE_PATH: "../vendor/bundle"
     steps:
       - uses: actions/checkout@v3
         with:
           repository: blab/nextflu
+          ref: exclude-vendor
           sparse-checkout: |
             auspice
       - uses: ruby/setup-ruby@v1
