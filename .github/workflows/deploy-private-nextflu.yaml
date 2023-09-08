@@ -11,6 +11,8 @@ defaults:
 jobs:
   install:
     runs-on: ubuntu-latest
+    env:
+      BUNDLE_PATH: "../vendor/bundle"
     steps:
       - uses: actions/checkout@v3
         with:
