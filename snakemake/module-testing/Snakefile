@@ -1,12 +1,9 @@
-config["module_basedir"] = f"{workflow.current_basedir}/module"
-
 module module_workflow:
     snakefile:"module/Snakefile"
     config: config
     prefix: "module"
 
-use rule * from module_workflow as module_*
-
+use rule * from module_workflow as *
 
 rule all:
     input:

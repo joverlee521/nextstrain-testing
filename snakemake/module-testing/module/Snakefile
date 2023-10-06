@@ -1,8 +1,10 @@
+print(f"Snakefile's basedir: {workflow.current_basedir}")
 
-rule all:
+
+rule module_all:
     input:
         "results/use_shell.txt",
-        "results/use_script.txt"
+        "results/get_outer_file.txt"
 
 rule use_shell:
     output: "results/use_shell.txt"
@@ -10,11 +12,22 @@ rule use_shell:
         basedir = workflow.current_basedir
     shell:
         """
-        echo "$PWD"
-        {config[module_basedir]}/bin/hello > {output}
+        echo "Shell's working directory: $PWD"
+        {params.basedir}/bin/hello > {output}
         """
 
-rule use_script:
+
+# This rule only works when running the build from the top level directory
+# i.e. `nextstrain build . get_outer_file`
+# Running this with only the subdirectory results in an errror
+# i.e. `nextstrain build module get_outer_file` (in the Docker runtime)
+# because the runtime does not have access to the outer file.
+rule get_outer_file:
+    input:
+        f"{workflow.current_basedir}/../config/reference.txt"
     output:
-        test = "results/use_script.txt"
-    script: "bin/hello.sh"
+        "results/get_outer_file.txt"
+    shell:
+        """
+        cat {input} > {output}
+        """
