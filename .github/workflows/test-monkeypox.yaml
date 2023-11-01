@@ -1,0 +1,18 @@
+name: Test monkeypox -> mpox rename
+
+on: workflow_dispatch
+
+jobs:
+  test-mpox:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: nextstrain/mpox
+
+  test-monkeypox:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: nextstrain/monkeypox
