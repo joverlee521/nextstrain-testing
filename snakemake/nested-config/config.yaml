@@ -1,0 +1,11 @@
+upload:
+  s3:
+    files:
+      - i
+      - ii
+      - iii
+    remote:
+      - ii
+      - iii
+      - iv
+    dst: "URL"
