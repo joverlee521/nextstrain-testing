@@ -1,0 +1,11 @@
+rule all:
+    input: "module/module_all.txt"
+    output: "all.txt"
+    script: "echo-pwd.sh"
+
+module module_workflow:
+    snakefile: "module/Snakefile"
+    config: config
+    prefix: "module"
+
+use rule * from module_workflow as *

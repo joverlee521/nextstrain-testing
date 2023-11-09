@@ -1,0 +1,3 @@
+rule module_all:
+    output: "module_all.txt"
+    script: "echo-pwd.sh"
