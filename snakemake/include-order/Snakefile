@@ -1,0 +1,11 @@
+"""
+Rule order and the include order should not matter for the DAG.
+"""
+rule all:
+    input:
+        "results/b.txt"
+
+include: "rules/a.smk"
+include: "rules/b.smk"
+
+include: "rules/a-b.smk"
