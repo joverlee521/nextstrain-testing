@@ -1,7 +1,11 @@
 
 
 rule all:
-    input: "results/all.txt"
+    input: "phylogenetic/results/all.txt"
 
 
+# include directives MUST be relative to the Snakefile they are defined in!
+# https://snakemake.readthedocs.io/en/stable/snakefiles/modularization.html#includes
+# This results in special casing include paths in this Snakefile compared to the
+# top level paths used throughout the workflow
 include: "rules/a.smk"

@@ -107,3 +107,19 @@ Finished job 0.
 2 of 2 steps (100%) done
 Complete log: .snakemake/log/2023-11-17T231442.159506.snakemake.log
 ```
+
+## Use top-level filepaths within workflows
+
+We no longer have to provide the -d option if we define all inputs/outputs as
+top-level filepaths within the workflows
+
+```
+nextstrain build . -s phylogenetic/Snakefile --forceall
+Building DAG of jobs...
+...
+2 of 2 steps (100%) done
+Complete log: .snakemake/log/2023-11-17T235501.777334.snakemake.log
+```
+
+However, the `include` directive _must_ be relative the Snakefile it's defined in.
+This results in a slight mismatch in filepaths.
