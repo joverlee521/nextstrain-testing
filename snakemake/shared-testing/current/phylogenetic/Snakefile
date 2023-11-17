@@ -1,0 +1,7 @@
+
+
+rule all:
+    input: "results/all.txt"
+
+
+include: "rules/a.smk"
