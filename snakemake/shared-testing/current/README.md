@@ -123,3 +123,16 @@ Complete log: .snakemake/log/2023-11-17T235501.777334.snakemake.log
 
 However, the `include` directive _must_ be relative the Snakefile it's defined in.
 This results in a slight mismatch in filepaths.
+
+## Use `workdir` directive
+
+We can also get around the -d option by defining the working directory with the
+`workdir` directive at the top of the workflow's Snakefile
+
+```
+nextstrain build . -s phylogenetic/Snakefile --forceall
+Building DAG of jobs...
+...
+2 of 2 steps (100%) done
+Complete log: ../.snakemake/log/2023-11-17T235925.951892.snakemake.log
+```
