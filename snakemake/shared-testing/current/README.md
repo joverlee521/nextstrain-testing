@@ -219,4 +219,19 @@ workflow is only included when the config is set to a specific value
 nextstrain build . -C workflow=phylogenetic
 ```
 
-- Does this still use the config file defined in the workflow/Snakefile??
+This doesn't seem that better than just calling the individual Snakefiles
+with
+```
+nextstrain build . -s phylogenetic/Snakefile
+```
+
+### Profiles
+
+I briefly played with the idea of using Snakemake profiles to point to the correct
+Snakefile and directory for workflows, e.g.
+```
+nextstrain build . -p profiles/phylogenetic
+```
+However, as of Snakemake v7.32.3 (the version currently used in nextstrain-base),
+[the Snakefile is checked _before_ the profile](https://github.com/snakemake/snakemake/blob/b76cfff4fbec3e53cfd46c7f32c3a5c0e9d6dc8a/snakemake/__init__.py#L2739-L2755) so we cannot
+define the Snakefile in the profile.
