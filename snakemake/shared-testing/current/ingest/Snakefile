@@ -1,0 +1,19 @@
+import pathlib
+
+rule all:
+    input: "ingest/results/all.txt"
+
+
+if "custom_rules" in config:
+    workflow_dir = pathlib.Path(workflow.current_basedir).name
+    for rule_file in config["custom_rules"]:
+
+        filepath = pathlib.Path(rule_file)
+
+        # Try to make sure the include filepath is relative to ingest
+        try:
+            relative_filepath = filepath.relative_to(workflow_dir)
+        except ValueError:
+            relative_filepath = filepath
+
+        include: str(relative_filepath)

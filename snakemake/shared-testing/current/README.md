@@ -121,6 +121,10 @@ Building DAG of jobs...
 Complete log: .snakemake/log/2023-11-17T235501.777334.snakemake.log
 ```
 
+Another positive here is the path names in the Snakemake logs are the full paths
+relative to the pathogen repo, so users can easily see which files are used/created
+in the workflow!
+
 However, the `include` directive _must_ be relative the Snakefile it's defined in.
 This results in a slight mismatch in filepaths.
 
@@ -136,3 +140,83 @@ Building DAG of jobs...
 2 of 2 steps (100%) done
 Complete log: ../.snakemake/log/2023-11-17T235925.951892.snakemake.log
 ```
+
+## Built-in Snakemake variables/methods
+
+Some built-in Snakemake variables that I considered using in setting up
+the subdirectories and orchestrating the overall workflow.
+
+1. `workflow.basedir` = the directory of the "main" Snakefile in the workflow
+    - default = the top level Snakefile where snakemake was invoked
+    - can be changed with the `--snakefile/-s` CLI option
+
+2. `workflow.current_basedir` = the base directory of the current Snakefile
+    - always points to the Snakefile it is used in regardless of include/modules/etc.
+
+3. `workflow.source_path()` = allows us to specify a path relative to the current Snakefile
+    - currently unusable due to [issue with cache tmp file triggering param changes that cause reruns](https://github.com/snakemake/snakemake/issues/1805)
+
+
+## Orchestrate all workflows from the top level using Snakemake
+
+Instead of relying on the users to specify the Snakefile to use in the workflows,
+maybe we can help orchestrate all of the workflows from the top level?
+
+### Sub-workflows
+
+Non-starter because it has been marked as deprecated and will soon be removed
+in [Snakemake v8](https://github.com/snakemake/snakemake/issues/2409).
+
+Some other issues identified when testing out sub-workflows:
+- Cannot specify a subworkflow target from the snakemake command
+- The --forceall flag does not propagate to the subworkflow, so the main workflow
+could potentially use local stale ingest outputs
+
+
+### Modules
+
+Snakemake is favoring modules instead of sub-workflows. However, there are a couple
+issues with using modules for our intended use.
+
+1. The working directory is always set the top level Snakefile that imports the modules.
+This results in errors when trying to run local scripts with relative paths within
+the modules (e.g. `./bin/notify-on-error` in ingest).
+We would have to prefix all of these local scripts with a variable/config value that
+can point to the correct directory.
+
+2. The `prefix` directive does not work for the top level "shared" directory
+because [Snakemake purposely not use prefix if the filepath starts with ".."]
+(https://github.com/snakemake/snakemake/issues/1647).
+
+3. From [Snakemake docs](https://snakemake.readthedocs.io/en/stable/snakefiles/modularization.html#modules):
+> any Python variables and functions available in the module-defining namespace
+will not be visible from inside the module. However, it is possible to pass
+information to the module using the config
+
+> any configfile statements inside the module are ignored.
+
+This just seems like more trouble than it's worth to use after testing it out for a while...
+
+### Include
+
+One possibility is to change all paths to be relative to the top level directory
+and just `include` all of the workflows in a top level Snakefile.
+
+Some issues with this approach:
+- All rule names must be unique _between_ workflows
+- All config names must be unique _between_ workflows
+- All required configs for _all_ workflows must be provided even when only running
+a single workflow
+- Perhaps confusion with top level paths vs workflow level paths due to how [Snakemake
+handles relative filepaths](https://snakemake.readthedocs.io/en/stable/project_info/faq.html#how-does-snakemake-interpret-relative-paths).
+
+### Conditionally include
+
+We could conditionally include worklows by config value, so that the
+workflow is only included when the config is set to a specific value
+
+```
+nextstrain build . -C workflow=phylogenetic
+```
+
+- Does this still use the config file defined in the workflow/Snakefile??

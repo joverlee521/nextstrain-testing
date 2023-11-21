@@ -1,0 +1,2 @@
+custom_rules:
+  - ingest/rules/a.smk

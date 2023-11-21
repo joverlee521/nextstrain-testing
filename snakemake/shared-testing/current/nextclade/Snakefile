@@ -1,6 +1,6 @@
 
 rule all:
-    input: "phylogenetic/results/all.txt"
+    input: "nextclade/results/all.txt"
 
 # Must be relative to current Snakefile
 include: "rules/a.smk"
