@@ -24,6 +24,20 @@ inputs:
 This runs in to issues with the containerized runtimes that need to mount the
 build directory.
 
+# Final Decision
+
+After all the testing done below, I've decided to use the hardcoded `workdir` in
+workflows so that users can call the workflow by point to the main Snakefile
+```
+nextstrain build . -s phylogenetic/Snakefile
+```
+
+This can then easily be moved to a Nextstrain CLI option in the near future
+that can point to the correct Snakefile under the hood
+```
+nextstrain build --workflow phylogenetic .
+```
+
 
 ## Different nextstrain build commands
 

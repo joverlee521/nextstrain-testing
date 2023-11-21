@@ -1,10 +1,8 @@
 
 rule a:
-    input: "shared/reference.fasta"
-    output: touch("ingest/results/all.txt")
-    params:
-        script = "ingest/bin/echo-pwd"
+    input: "../shared/reference.fasta"
+    output: touch("results/all.txt")
     shell:
         """
-        {params.script}
+        bin/echo-pwd
         """

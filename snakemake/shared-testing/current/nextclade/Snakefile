@@ -1,6 +1,8 @@
+# The workflow filepaths are written relative to this Snakefile's base directory
+workdir: workflow.current_basedir
 
 rule all:
-    input: "nextclade/results/all.txt"
+    input: "results/all.txt"
 
 # Must be relative to current Snakefile
 include: "rules/a.smk"

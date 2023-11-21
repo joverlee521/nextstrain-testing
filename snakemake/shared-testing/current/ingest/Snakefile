@@ -1,19 +1,8 @@
-import pathlib
+# The workflow filepaths are written relative to this Snakefile's base directory
+workdir: workflow.current_basedir
 
 rule all:
-    input: "ingest/results/all.txt"
+    input: "results/all.txt"
 
-
-if "custom_rules" in config:
-    workflow_dir = pathlib.Path(workflow.current_basedir).name
-    for rule_file in config["custom_rules"]:
-
-        filepath = pathlib.Path(rule_file)
-
-        # Try to make sure the include filepath is relative to ingest
-        try:
-            relative_filepath = filepath.relative_to(workflow_dir)
-        except ValueError:
-            relative_filepath = filepath
-
-        include: str(relative_filepath)
+# Must be relative to current Snakefile
+include: "rules/a.smk"
