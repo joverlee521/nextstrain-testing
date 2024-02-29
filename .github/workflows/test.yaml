@@ -1,11 +1,23 @@
 name: test
 
-on: workflow_dispatch
+on:
+  repository_dispatch:
+    types:
+      - test
+
+  workflow_dispatch:
+    inputs:
+      boolean_input:
+        description: Test boolean input
+        type: boolean
+        default: true
+        required: false
 
 env:
   NULL: null
   EMPTY_STRING: ""
   NON_EMPTY_STRING: "hello"
+  TEST_BOOLEAN: ${{ inputs.boolean_input == '' && true || inputs.boolean_input }}
 
 jobs:
   test:
@@ -22,3 +34,5 @@ jobs:
 
       - if: env.NON_EMPTY_STRING != ''
         run: echo "Compared non empty string truthy"
+
+      - run: echo $TEST_BOOLEAN
