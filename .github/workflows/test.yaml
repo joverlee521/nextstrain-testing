@@ -16,6 +16,7 @@ on:
 env:
   EMPTY_STRING: ""
   NON_EMPTY_STRING: "hello"
+  BOOLEAN_INPUT: ${{ inputs.boolean_input }}
   TEST_BOOLEAN: ${{ inputs.boolean_input == '' && true || inputs.boolean_input }}
 
 jobs:
@@ -34,4 +35,6 @@ jobs:
       - if: env.NON_EMPTY_STRING != ''
         run: echo "Compared non empty string truthy"
 
-      - run: echo $TEST_BOOLEAN
+      - run: |
+          echo "boolean input: $BOOLEAN_INPUT"
+          echo "test boolean: $TEST_BOOLEAN"
