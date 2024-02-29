@@ -14,7 +14,6 @@ on:
         required: false
 
 env:
-  NULL: null
   EMPTY_STRING: ""
   NON_EMPTY_STRING: "hello"
   TEST_BOOLEAN: ${{ inputs.boolean_input == '' && true || inputs.boolean_input }}
