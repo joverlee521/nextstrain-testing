@@ -17,7 +17,7 @@ env:
   EMPTY_STRING: ""
   NON_EMPTY_STRING: "hello"
   BOOLEAN_INPUT: ${{ inputs.boolean_input }}
-  TEST_BOOLEAN: ${{ inputs.boolean_input == '' && true || inputs.boolean_input }}
+  TEST_BOOLEAN: ${{ github.event_name != 'workflow_dispatch' && true || inputs.boolean_input }}
 
 jobs:
   test:
