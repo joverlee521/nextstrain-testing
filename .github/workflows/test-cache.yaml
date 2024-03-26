@@ -1,0 +1,34 @@
+name: Test cache
+
+on:
+  workflow_dispatch:
+    inputs:
+      cache-key:
+        description: Cache key
+        type: string
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Look up cache input
+      id: cache-input
+      uses: actions/cache@v4
+      with:
+        path: input-cache-key
+        key: input-cache-key-${{ inputs.cache-key }}
+        lookup-only: true
+
+    - name: No cache hit
+      id: no-cache-hit
+      if: steps.cache.outputs.cache-hit != 'true'
+      run: echo "No cache hit!"
+
+    - name: Found cache hit
+      id: found-cache-hit
+      if: steps.cache.outputs.cache-hit == 'true'
+      run: echo "Found cache hit!"
