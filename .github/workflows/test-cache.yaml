@@ -26,7 +26,9 @@ jobs:
     - name: No cache hit
       id: no-cache-hit
       if: steps.cache.outputs.cache-hit != 'true'
-      run: echo "No cache hit!"
+      run: |
+        echo "No cache hit!"
+        touch input-cache-key
 
     - name: Found cache hit
       id: found-cache-hit
