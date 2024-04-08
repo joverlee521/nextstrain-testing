@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Get sha256sum
         id: get-sha256sum
+        env:
+          AWS_REGION: us-east-1
         run: |
           s3_urls=(
             "s3://nextstrain-data/files/workflows/zika/metadata.tsv.zst"
