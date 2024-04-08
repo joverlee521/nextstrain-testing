@@ -29,7 +29,7 @@ jobs:
             bucket="${s3path%%/*}"
             key="${s3path#*/}"
 
-            s3_hash="$(aws s3api head-object --no-sign-request --bucket "$bucket" --key "$key" --query Metadata.sha256sum --output text 2>/dev/null || echo "$no_hash")"
+            s3_hash="$(aws s3api head-object --no-sign-request --bucket "$bucket" --key "$key" --query Metadata.sha256sum --output text)"
             echo "${s3_hash}" | tee -a ingest-output-sha256sum
           done
 
