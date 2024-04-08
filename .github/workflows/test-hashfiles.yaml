@@ -24,13 +24,20 @@ jobs:
 
           no_hash=0000000000000000000000000000000000000000000000000000000000000000
 
+          aws --version
+
           for s3_url in "${s3_urls[@]}"; do
             s3path="${s3_url#s3://}"
             bucket="${s3path%%/*}"
             key="${s3path#*/}"
 
-            s3_hash="$(aws s3api head-object --no-sign-request --bucket "$bucket" --key "$key" --query Metadata.sha256sum --output text)"
-            echo "${s3_hash}" | tee -a ingest-output-sha256sum
+            aws s3api head-object \
+              --no-sign-request \
+              --bucket "$bucket" \
+              --key "$key" \
+              --query Metadata.sha256sum \
+              --output text \
+              | tee -a ingest-output-sha256sum
           done
 
       - name: Check cache
