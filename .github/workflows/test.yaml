@@ -38,3 +38,11 @@ jobs:
       - run: |
           echo "boolean input: $BOOLEAN_INPUT"
           echo "test boolean: $TEST_BOOLEAN"
+
+      - run: |
+          echo "RESOURCE_INDEX=s3://nextstrain-inventories/resources/v1.json.gz" | tee -a "$GITHUB_ENV"
+
+      - env:
+          TEST: ${{ startsWith(env.RESOURCE_INDEX, 's3://') }}
+        run:
+          echo $TEST
