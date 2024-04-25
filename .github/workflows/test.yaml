@@ -46,3 +46,13 @@ jobs:
           TEST: ${{ startsWith(env.RESOURCE_INDEX, 's3://') }}
         run:
           echo $TEST
+
+      - id: jq_matrix
+        run: |
+          jq_filter='[ env.RESOURCE_INDEX ]'
+          ref_matrix=$(jq --null-input "$jq_filter | tojson")
+          echo "ref_matrix=$ref_matrix" | tee -a "$GITHUB_OUTPUT"
+
+      - env:
+          TEST: ${{ fromJSON(steps.jq_matrix.outputs.ref_matrix) }}
+        run: echo $TEST
