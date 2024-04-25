@@ -51,19 +51,16 @@ jobs:
 
       - id: ref_matrix
         run: |
-          jq_filter='{"ref": [ env.RESOURCE_INDEX ]}'
+          jq_filter='[ env.RESOURCE_INDEX ]'
           ref_matrix=$(jq -c --null-input "$jq_filter")
           echo "ref_matrix=$ref_matrix" | tee -a "$GITHUB_OUTPUT"
-
-      - env:
-          TEST: ${{ fromJSON(steps.ref_matrix.outputs.ref_matrix) }}
-        run: echo $TEST
 
 
   test_matrix:
     needs: [test]
     runs-on: ubuntu-latest
     strategy:
-      matrix: ${{ fromJson(needs.test.outputs.ref_matrix) }}
+      matrix:
+        ref: ${{ fromJson(needs.test.outputs.ref_matrix) }}
     steps:
       - run: echo ${{ matrix.ref }}
