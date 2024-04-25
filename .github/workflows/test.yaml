@@ -52,7 +52,7 @@ jobs:
       - id: ref_matrix
         run: |
           jq_filter='{"ref": [ env.RESOURCE_INDEX ]}'
-          ref_matrix=$(jq --null-input "$jq_filter | tojson")
+          ref_matrix=$(jq -c --null-input "$jq_filter")
           echo "ref_matrix=$ref_matrix" | tee -a "$GITHUB_OUTPUT"
 
       - env:
