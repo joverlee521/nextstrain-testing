@@ -82,9 +82,10 @@ jobs:
     if: |2
          !cancelled()
       && needs.test.result == 'success'
-      && contains(fromJSON('["success", "skipped"]'), needs.test_skipped.result)
       && github.repository == 'joverlee521/nextstrain-testing'
       && (   (github.event_name == 'push' && github.ref == 'refs/heads/main')
-          || (github.event_name == 'workflow_dispatch' && inputs.heroku-app) )
+          || (github.event_name == 'workflow_dispatch' && inputs.boolean_input) )
+    env:
+      TEST_SKIPPED_RESULT: ${{ needs.test_skipped.result }}
     steps:
-      - run: echo "NOT SKIPPED"
+      - run: echo "$TEST_SKIPPED_RESULT"
