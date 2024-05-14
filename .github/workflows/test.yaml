@@ -87,5 +87,8 @@ jobs:
           || (github.event_name == 'workflow_dispatch' && inputs.boolean_input) )
     env:
       TEST_SKIPPED_RESULT: ${{ needs.test_skipped.result }}
+      TEST_CONTAINS: ${{ contains(fromJSON('["success", "skipped"]'), needs.test_skipped.result)}}
     steps:
-      - run: echo "$TEST_SKIPPED_RESULT"
+      - run: |
+          echo "$TEST_SKIPPED_RESULT"
+          echo "$TEST_CONTAINS"
