@@ -66,13 +66,11 @@ jobs:
       - run: echo ${{ matrix.ref }}
 
   test_skipped:
-    runs-on: ubuntu-latest
     if: |2
          github.repository == 'joverlee521/nextstrain-testing'
       && github.event_name == 'push'
       && github.ref == 'refs/heads/main'
-    steps:
-      - run: echo "NOT SKIPPED"
+    uses: ./.github/workflows/test-reusable.yaml
 
   test_depend_on_skipped:
     runs-on: ubuntu-latest
