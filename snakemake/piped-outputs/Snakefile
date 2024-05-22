@@ -1,0 +1,34 @@
+rule all:
+    input: "results/final.txt"
+
+
+rule a:
+    output: pipe("results/a.txt")
+    shell:
+        """
+        echo "a" > {output}
+        """
+
+rule b:
+    input: "results/a.txt"
+    output: pipe("results/b.txt")
+    shell:
+        """
+        cat {input} > {output}
+        """
+
+rule c:
+    input: "results/b.txt"
+    output: pipe("results/c.txt")
+    shell:
+        """
+        cat {input} > {output}
+        """
+
+rule final:
+    input: "results/c.txt"
+    output: "results/final.txt"
+    shell:
+        """
+        cat {input} > {output}
+        """
