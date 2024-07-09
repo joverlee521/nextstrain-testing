@@ -1,0 +1,33 @@
+rule all:
+    input:
+        b = "b.txt",
+        c = "c.txt"
+
+
+# Defaults to 1 core
+rule a:
+    output: touch("a.txt")
+    shell:
+        """
+        echo rule a nproc "$(nproc)"
+        """
+
+# Will use half of available cores
+rule b:
+    input: "a.txt"
+    output: touch("b.txt")
+    threads: workflow.cores * 0.5
+    shell:
+        """
+        echo rule b nproc "$(nproc)"
+        """
+
+# Hard limit of 2 cores
+rule c:
+    input: "a.txt"
+    output: touch("c.txt")
+    threads: 2
+    shell:
+        """
+        echo rule c nproc "$(nproc)"
+        """
