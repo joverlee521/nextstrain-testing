@@ -18,6 +18,31 @@ Dataset 2 with measurements sidecar JSON.
 
 Dataset 2 with measurements sidecar JSON (same as previous slide).
 
-# [Dataset 2 w/ different collection](https://nextstrain.org/community/joverlee521/nextstrain-testing/flu/seasonal/h1n1pdm/ha/09-17?m_collection=egg_HI_raw)
+# [Dataset 2 w/ different collection](https://nextstrain.org/community/joverlee521/nextstrain-testing/flu/seasonal/h1n1pdm/ha/09-17?d=measurements&m_collection=egg_HI_raw)
 
-Dataset 2 with "Egg Passaged" collection that is different than the default "Cell Passaged" collection.
+Dataset 2 with only the measurements panel.
+This should be displaying the "Egg Passaged" collection that is different than the default "Cell Passaged" collection.
+
+# [Hide overall mean](https://nextstrain.org/community/joverlee521/nextstrain-testing/flu/seasonal/h1n1pdm/ha/09-17?d=measurements&m_overallMean=hide)
+
+This should revert back to the default "Cell Passaged" collection, but hide the overall means per row.
+
+# [Display raw](https://nextstrain.org/community/joverlee521/nextstrain-testing/flu/seasonal/h1n1pdm/ha/09-17?d=measurements&m_display=raw)
+
+This should display the raw measurements in the panel instead of the default means.
+
+# [Hide threshold](https://nextstrain.org/community/joverlee521/nextstrain-testing/flu/seasonal/h1n1pdm/ha/09-17?d=measurements&m_threshold=hide)
+
+This should hide the thresholds.
+
+# [Different group by](https://nextstrain.org/community/joverlee521/nextstrain-testing/flu/seasonal/h1n1pdm/ha/09-17?d=measurements&m_groupBy=serum)
+
+This should display a different grouping by serum instead of the default reference strains.
+
+# [Filter to different reference strains](https://nextstrain.org/community/joverlee521/nextstrain-testing/flu/seasonal/h1n1pdm/ha/09-17?d=measurements&mf_reference_strain=A/Astrakhan/1/2011)
+
+This should display measurements panel filtered to only the `A/Astrakhan/1/2011` reference strain.
+
+# [Filter to different reference strains](https://nextstrain.org/community/joverlee521/nextstrain-testing/flu/seasonal/h1n1pdm/ha/09-17?d=measurements&mf_reference_strain=A/Astrakhan/1/2011&mf_reference_strain=A/Bayern/69/2009)
+
+This should display measurements panel filtered to two reference strains.
