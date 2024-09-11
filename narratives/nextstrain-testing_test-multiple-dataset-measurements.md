@@ -5,14 +5,15 @@ dataset: "https://nextstrain.org/community/blab/measurements-panel/flu/seasonal/
 ---
 
 
-# [Dataset 1 w/ measurements](https://nextstrain.org/community/blab/measurements-panel/flu/seasonal/h3n2/ha)
+# [Dataset 1 w/ measurements](https://nextstrain.org/community/blab/measurements-panel/flu/seasonal/h3n2/ha?m_overallMean=hide)
 
 Dataset 1 with measurements sidecar JSON (same dataset as title page).
 
 
-# [Dataset 2 w/ measurements ](https://nextstrain.org/community/joverlee521/nextstrain-testing/flu/seasonal/h1n1pdm/ha/09-17)
+# [Dataset 2 w/ measurements ](https://nextstrain.org/community/joverlee521/nextstrain-testing/flu/seasonal/h1n1pdm/ha/09-17?m_collection=egg_HI_raw&m_overallMean=show&m_display=raw)
 
 Dataset 2 with measurements sidecar JSON.
+Changes dataset _and_ has additional URL query params for the measurements panel to show overall mean and use raw display.
 
 # [Dataset 2 w/ measurements ](https://nextstrain.org/community/joverlee521/nextstrain-testing/flu/seasonal/h1n1pdm/ha/09-17)
 
