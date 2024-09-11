@@ -27,9 +27,10 @@ This should be displaying the "Egg Passaged" collection that is different than t
 
 This should revert back to the default "Cell Passaged" collection, but hide the overall means per row.
 
-# [Display raw](https://nextstrain.org/community/joverlee521/nextstrain-testing/flu/seasonal/h1n1pdm/ha/09-17?d=measurements&m_display=raw)
+# [Display raw and change coloring](https://nextstrain.org/community/joverlee521/nextstrain-testing/flu/seasonal/h1n1pdm/ha/09-17?c=region&d=measurements&m_display=raw)
 
-This should display the raw measurements in the panel instead of the default means.
+Changing to raw displays and changing coloring at the same time to see if we run
+into the bug from changing multiple states in D3.
 
 # [Hide threshold](https://nextstrain.org/community/joverlee521/nextstrain-testing/flu/seasonal/h1n1pdm/ha/09-17?d=measurements&m_threshold=hide)
 
