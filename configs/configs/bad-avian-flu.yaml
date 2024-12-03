@@ -1,0 +1,8 @@
+builds:
+  h5nx:
+    ha:
+      all-time:
+        filter:
+          min_date: "1996"
+          min_length: "1600"
+          bogus_param: "bogus"

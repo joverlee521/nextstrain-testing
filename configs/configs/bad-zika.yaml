@@ -1,0 +1,5 @@
+filter:
+  min_date: "1996"
+  min_length: "1600"
+  exclude: "exclude"
+  bogus: "bogus"

@@ -1,0 +1,229 @@
+builds:
+  h5nx:
+    pb2:
+      all-time:
+        filter:
+          min_date: "2000"
+          min_length: 1800
+      2y:
+        filter:
+          min_date: 2Y
+          min_length: 2100
+    pb1:
+      all-time:
+        filter:
+          min_date: "1996"
+          min_length: 2100
+      2y:
+        filter:
+          min_date: 2Y
+          min_length: 2100
+    pa:
+      all-time:
+        filter:
+          min_date: "1996"
+          min_length: 2000
+      2y:
+        filter:
+          min_date: 2Y
+          min_length: 2000
+    ha:
+      all-time:
+        filter:
+          min_date: "1996"
+          min_length: 1600
+      2y:
+        filter:
+          min_date: 2Y
+          min_length: 1600
+    np:
+      all-time:
+        filter:
+          min_date: "1996"
+          min_length: 1400
+      2y:
+        filter:
+          min_date: 2Y
+          min_length: 1400
+    na:
+      all-time:
+        filter:
+          min_date: "1996"
+          min_length: 1270
+      2y:
+        filter:
+          min_date: 2Y
+          min_length: 1270
+    mp:
+      all-time:
+        filter:
+          min_date: "1996"
+          min_length: 900
+      2y:
+        filter:
+          min_date: 2Y
+          min_length: 900
+    ns:
+      all-time:
+        filter:
+          min_date: "1996"
+          min_length: 800
+      2y:
+        filter:
+          min_date: 2Y
+          min_length: 800
+  h5n1:
+    pb2:
+      all-time:
+        filter:
+          min_date: "1996"
+          min_length: 2100
+      2y:
+        filter:
+          min_date: 2Y
+          min_length: 2100
+    pb1:
+      all-time:
+        filter:
+          min_date: "1996"
+          min_length: 2100
+      2y:
+        filter:
+          min_date: 2Y
+          min_length: 2100
+    pa:
+      all-time:
+        filter:
+          min_date: "1996"
+          min_length: 2000
+      2y:
+        filter:
+          min_date: 2Y
+          min_length: 2000
+    ha:
+      all-time:
+        filter:
+          min_date: "1996"
+          min_length: 1600
+      2y:
+        filter:
+          min_date: 2Y
+          min_length: 1600
+    np:
+      all-time:
+        filter:
+          min_date: "1996"
+          min_length: 1400
+      2y:
+        filter:
+          min_date: 2Y
+          min_length: 1400
+    na:
+      all-time:
+        filter:
+          min_date: "1996"
+          min_length: 1270
+      2y:
+        filter:
+          min_date: 2Y
+          min_length: 1270
+    mp:
+      all-time:
+        filter:
+          min_date: "1996"
+          min_length: 900
+      2y:
+        filter:
+          min_date: 2Y
+          min_length: 900
+    ns:
+      all-time:
+        filter:
+          min_date: "1996"
+          min_length: 800
+      2y:
+        filter:
+          min_date: 2Y
+          min_length: 800
+  h7n9:
+    pb2:
+      all-time:
+        filter:
+          min_date: "2013"
+          min_length: 2100
+    pb1:
+      all-time:
+        filter:
+          min_date: "2013"
+          min_length: 2100
+    pa:
+      all-time:
+        filter:
+          min_date: "2013"
+          min_length: 2000
+    ha:
+      all-time:
+        filter:
+          min_date: "2013"
+          min_length: 1600
+    np:
+      all-time:
+        filter:
+          min_date: "2013"
+          min_length: 1400
+    na:
+      all-time:
+        filter:
+          min_date: "2013"
+          min_length: 1270
+    mp:
+      all-time:
+        filter:
+          min_date: "2013"
+          min_length: 900
+    ns:
+      all-time:
+        filter:
+          min_date: "2013"
+          min_length: 800
+  h9n2:
+    pb2:
+      all-time:
+        filter:
+          min_date: "1966"
+          min_length: 2100
+    pb1:
+      all-time:
+        filter:
+          min_date: "1966"
+          min_length: 2100
+    pa:
+      all-time:
+        filter:
+          min_date: "1966"
+          min_length: 2000
+    ha:
+      all-time:
+        filter:
+          min_date: "1966"
+          min_length: 1600
+    np:
+      all-time:
+        filter:
+          min_date: "1966"
+          min_length: 1400
+    na:
+      all-time:
+        filter:
+          min_date: "1966"
+          min_length: 1270
+    mp:
+      all-time:
+        filter:
+          min_date: "1966"
+          min_length: 900
+    ns:
+      all-time:
+        filter:
+          min_date: "1966"
+          min_length: 800

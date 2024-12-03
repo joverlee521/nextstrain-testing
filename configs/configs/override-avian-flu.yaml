@@ -1,0 +1,29 @@
+builds:
+  h5nx:
+    ha:
+      all-time:
+        filter:
+          min_date: "1996"
+          min_length: 1000
+      2y:
+        filter:
+          min_date: 2Y
+          min_length: 1000
+      3y:
+        filter:
+          min_date: 3Y
+          min_length: 1000
+    na:
+      all-time:
+        filter:
+          min_date: "1996"
+          min_length: 1000
+      2y:
+        filter:
+          min_date: 2Y
+          min_length: 1000
+      3y:
+        filter:
+          min_date: 3Y
+          min_length: 1000
+custom_param: override
