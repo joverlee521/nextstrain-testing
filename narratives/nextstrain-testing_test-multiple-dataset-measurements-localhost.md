@@ -48,3 +48,19 @@ This should display measurements panel filtered to only the `A/Astrakhan/1/2011`
 # [Filter to different reference strains](http://localhost:4000/nextstrain-testing/flu/seasonal/h1n1pdm/ha/09-17?d=measurements&mf_reference_strain=A/Astrakhan/1/2011&mf_reference_strain=A/Bayern/69/2009)
 
 This should display measurements panel filtered to two reference strains.
+
+
+# [Color tree by measurements](http://localhost:4000/nextstrain-testing/flu/seasonal/h1n1pdm/ha/09-17?d=tree,measurements&c=m-A/Astrakhan/1/2011&p=grid)
+
+This should color tree by measurements (`A/Astrakhan/1/2011`)
+
+# [Filter to different reference strains with measurements coloring](http://localhost:4000/nextstrain-testing/flu/seasonal/h1n1pdm/ha/09-17?d=tree,measurements&mf_reference_strain=A/Astrakhan/1/2011&mf_reference_strain=A/HongKong/90/2016&c=m-A/HongKong/90/2016&p=grid)
+
+This should display measurements panel filtered to 2 reference strains
+and color tree by measurements (`A/HongKong/90/2016`).
+
+# [Filter to one reference strain with measurements coloring](http://localhost:4000/nextstrain-testing/flu/seasonal/h1n1pdm/ha/09-17?d=tree,measurements&mf_reference_strain=A/Bayern/69/2009&c=m-A/Astrakhan/1/2011&p=grid)
+
+This should display measurements panel filtered to 1 reference strain and color
+tree by measurements (`A/Astrakhan/1/2011`). Because `A/Astrakhan/1/2011` is not
+included in the measurements data, the coloring is all grey.
