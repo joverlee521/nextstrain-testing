@@ -32,9 +32,15 @@ on:
     - cron: '0 17 * * *'
 
   workflow_dispatch:
+    inputs:
+      fail:
+        description: Fail workflow if true
+        type: boolean
 
 jobs:
   ingest:
     runs-on: ubuntu-latest
     steps:
       - run: echo "Mock ingest"
+      - if: ${{ inputs.fail }}
+        run: echo "Failing ingest workflow" && exit 1
