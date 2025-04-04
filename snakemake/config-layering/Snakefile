@@ -1,0 +1,7 @@
+def resolve_config_files():
+    return ["default-config.yaml", "custom-config.yaml"]
+
+for configfile in resolve_config_files():
+    configfile: configfile
+
+print(config)
