@@ -45,7 +45,12 @@ jobs:
     # 1. `workflow_run` triggered `check-new-data` and there _is_ new data
     # 2. the workflow is being manually run by `workflow_dispatch`
     needs: [check-new-data]
-    if: ${{ always() && (needs.check-new-data.outputs.cache-hit != 'true' || github.event_name == 'workflow_dispatch') }}
+    if: |
+      always() &&
+      (
+        (needs.check-new-data.result == 'success' && needs.check-new-data.outputs.cache-hit != 'true') ||
+        github.event_name == 'workflow_dispatch'
+      )
     runs-on: ubuntu-latest
     steps:
       - run: echo "Mock phylogenetic"
