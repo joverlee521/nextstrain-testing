@@ -1,0 +1,19 @@
+# Fetch the shared workflow
+module shared_workflow:
+    snakefile: github("nextstrain/measles", path="shared/functions.smk", commit="efda4428d83bf0de092db21d2dd00822a0a41509")
+    prefix: "shared"
+
+# Import all rules & functions from shared workflow
+use rule * from shared_workflow
+
+
+rule all:
+    input: "results/curate.txt"
+    params:
+        test=shared_workflow.resolve_config_path("test.txt"),
+    shell:
+        """
+        echo {params.test:q}
+        """
+
+include: "rules/curate.smk"
