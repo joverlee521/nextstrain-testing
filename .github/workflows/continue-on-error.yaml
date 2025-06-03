@@ -19,5 +19,8 @@ jobs:
     if: ${{ always() }}
     env:
       CONCLUSION: ${{ needs.job1.outputs.sleep-step-conclusion }}
+      RESULT: ${{ needs.job1.result }}
     steps:
-      - run: echo "$CONCLUSION"
+      - run: |
+          echo "CONCLUSION=$CONCLUSION"
+          echo "RESULT=$RESULT"
