@@ -15,62 +15,78 @@ jobs:
   job2:
     runs-on: ubuntu-latest
     needs: [ job1 ]
-    if: ${{ always() }}
-    env:
-      CONCLUSION: ${{ needs.job1.outputs.sleep-step-conclusion }}
-      RESULT: ${{ needs.job1.result }}
-    steps:
-      - id: attach
-        run: |
-          echo "CONCLUSION=$CONCLUSION"
-          echo "RESULT=$RESULT"
-    outputs:
-      attach-step-conclusion: ${{ steps.attach.conclusion }}
-
-  job3:
-    runs-on: ubuntu-latest
-    needs: [ job1 ]
-    if: ${{ needs.job1.outputs.sleep-step-conclusion == 'cancelled' }}
-    env:
-      CONCLUSION: ${{ needs.job1.outputs.sleep-step-conclusion }}
-      RESULT: ${{ needs.job1.result }}
-    steps:
-      - id: attach
-        run: |
-          echo "CONCLUSION=$CONCLUSION"
-          echo "RESULT=$RESULT"
-    outputs:
-      attach-step-conclusion: ${{ steps.attach.conclusion }}
-
-  job4:
-    runs-on: ubuntu-latest
-    needs: [ job1 ]
     if: ${{ !cancelled() && needs.job1.outputs.sleep-step-conclusion == 'cancelled' }}
     env:
       CONCLUSION: ${{ needs.job1.outputs.sleep-step-conclusion }}
       RESULT: ${{ needs.job1.result }}
+    timeout-minutes: 1
     steps:
       - id: attach
         run: |
           echo "CONCLUSION=$CONCLUSION"
           echo "RESULT=$RESULT"
+
+      - id: sleep
+        run: sleep 5m
     outputs:
-      attach-step-conclusion: ${{ steps.attach.conclusion }}
+      sleep-step-conclusion: ${{ steps.sleep.conclusion }}
+
+  job3:
+    runs-on: ubuntu-latest
+    needs: [ job2 ]
+    if: ${{ !cancelled() && needs.job2.outputs.sleep-step-conclusion == 'cancelled' }}
+    env:
+      CONCLUSION: ${{ needs.job2.outputs.sleep-step-conclusion }}
+      RESULT: ${{ needs.job2.result }}
+    timeout-minutes: 1
+    steps:
+      - id: attach
+        run: |
+          echo "CONCLUSION=$CONCLUSION"
+          echo "RESULT=$RESULT"
+
+      - id: sleep
+        run: sleep 5m
+    outputs:
+      sleep-step-conclusion: ${{ steps.sleep.conclusion }}
+
+  job4:
+    runs-on: ubuntu-latest
+    needs: [ job3 ]
+    if: ${{ !cancelled() && needs.job3.outputs.sleep-step-conclusion == 'cancelled' }}
+    env:
+      CONCLUSION: ${{ needs.job3.outputs.sleep-step-conclusion }}
+      RESULT: ${{ needs.job3.result }}
+    timeout-minutes: 1
+    steps:
+      - id: attach
+        run: |
+          echo "CONCLUSION=$CONCLUSION"
+          echo "RESULT=$RESULT"
+
+      - id: sleep
+        run: sleep 5m
+    outputs:
+      sleep-step-conclusion: ${{ steps.sleep.conclusion }}
 
   job5:
     runs-on: ubuntu-latest
-    needs: [ job1 ]
-    if: ${{ always() && needs.job1.outputs.sleep-step-conclusion == 'cancelled' }}
+    needs: [ job4 ]
+    if: ${{ !cancelled() && needs.job4.outputs.sleep-step-conclusion == 'cancelled' }}
     env:
-      CONCLUSION: ${{ needs.job1.outputs.sleep-step-conclusion }}
-      RESULT: ${{ needs.job1.result }}
+      CONCLUSION: ${{ needs.job4.outputs.sleep-step-conclusion }}
+      RESULT: ${{ needs.job4.result }}
+    timeout-minutes: 1
     steps:
       - id: attach
         run: |
           echo "CONCLUSION=$CONCLUSION"
           echo "RESULT=$RESULT"
+
+      - id: sleep
+        run: sleep 5m
     outputs:
-      attach-step-conclusion: ${{ steps.attach.conclusion }}
+      sleep-step-conclusion: ${{ steps.sleep.conclusion }}
 
   wait-conclusion:
     needs: [job2, job3, job4, job5]
@@ -81,4 +97,4 @@ jobs:
         run: |
           # shellcheck disable=SC2242
 
-          exit ${{ contains(needs.*.outputs.attach-step-conclusion, 'failure') && '1' || '0' }}
+          exit ${{ contains(needs.*.outputs.sleep-step-conclusion, 'failure') && '1' || '0' }}
