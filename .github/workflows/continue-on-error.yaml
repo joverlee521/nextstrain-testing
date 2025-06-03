@@ -24,3 +24,39 @@ jobs:
       - run: |
           echo "CONCLUSION=$CONCLUSION"
           echo "RESULT=$RESULT"
+
+  job3:
+    runs-on: ubuntu-latest
+    needs: [ job1 ]
+    if: ${{ needs.job1.outputs.sleep-step-conclusion == 'cancelled' }}
+    env:
+      CONCLUSION: ${{ needs.job1.outputs.sleep-step-conclusion }}
+      RESULT: ${{ needs.job1.result }}
+    steps:
+      - run: |
+          echo "CONCLUSION=$CONCLUSION"
+          echo "RESULT=$RESULT"
+
+  job4:
+    runs-on: ubuntu-latest
+    needs: [ job1 ]
+    if: ${{ !cancelled() && needs.job1.outputs.sleep-step-conclusion == 'cancelled' }}
+    env:
+      CONCLUSION: ${{ needs.job1.outputs.sleep-step-conclusion }}
+      RESULT: ${{ needs.job1.result }}
+    steps:
+      - run: |
+          echo "CONCLUSION=$CONCLUSION"
+          echo "RESULT=$RESULT"
+
+  job5:
+    runs-on: ubuntu-latest
+    needs: [ job1 ]
+    if: ${{ always() && needs.job1.outputs.sleep-step-conclusion == 'cancelled' }}
+    env:
+      CONCLUSION: ${{ needs.job1.outputs.sleep-step-conclusion }}
+      RESULT: ${{ needs.job1.result }}
+    steps:
+      - run: |
+          echo "CONCLUSION=$CONCLUSION"
+          echo "RESULT=$RESULT"
