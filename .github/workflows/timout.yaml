@@ -9,12 +9,78 @@ jobs:
     steps:
       - id: sleep
         run: |
-          exit_status=0
-          timeout 55s sleep 5m || exit_status=$?
-          if [[ $exit_status == 124 ]]; then
-            echo "Command timed out"
-            exit 0
+          exit_code=0
+          timeout 5s sleep 5m || exit_code=$?
+
+          if [[ $exit_code == 0 ]]; then
+            conclusion="success"
+          elif [[ $exit_code == 124 ]]; then
+            # 124 is the exit code for timed out commands
+            # Mask the exit code so that the job concludes successfully
+            # and we can continue the next wait-N job.
+            exit_code=0
+            conclusion="timeout"
+          else
+            conclusion="failure"
           fi
-          exit $exit_status
+
+          echo "conclusion=$conclusion" >> "$GITHUB_OUTPUT"
+          exit $exit_code
     outputs:
-      sleep-step-conclusion: ${{ steps.sleep.conclusion }}
+      sleep-step-conclusion: ${{ steps.sleep.outputs.conclusion }}
+
+  job2:
+    runs-on: ubuntu-latest
+    needs: [ job1 ]
+    if: ${{ needs.job1.outputs.sleep-step-conclusion == 'timeout' }}
+    timeout-minutes: 1
+    steps:
+      - id: sleep
+        run: |
+          exit_code=0
+          timeout 5s sleep 5m || exit_code=$?
+
+          if [[ $exit_code == 0 ]]; then
+            conclusion="success"
+          elif [[ $exit_code == 124 ]]; then
+            # 124 is the exit code for timed out commands
+            # Mask the exit code so that the job concludes successfully
+            # and we can continue the next wait-N job.
+            exit_code=0
+            conclusion="timeout"
+          else
+            conclusion="failure"
+          fi
+
+          echo "conclusion=$conclusion" >> "$GITHUB_OUTPUT"
+          exit $exit_code
+    outputs:
+      sleep-step-conclusion: ${{ steps.sleep.outputs.conclusion }}
+
+  job3:
+    runs-on: ubuntu-latest
+    needs: [ job2 ]
+    if: ${{ needs.job2.outputs.sleep-step-conclusion == 'timeout' }}
+    timeout-minutes: 1
+    steps:
+      - id: sleep
+        run: |
+          exit_code=0
+          timeout 5s sleep 5m || exit_code=$?
+
+          if [[ $exit_code == 0 ]]; then
+            conclusion="success"
+          elif [[ $exit_code == 124 ]]; then
+            # 124 is the exit code for timed out commands
+            # Mask the exit code so that the job concludes successfully
+            # and we can continue the next wait-N job.
+            exit_code=0
+            conclusion="timeout"
+          else
+            conclusion="failure"
+          fi
+
+          echo "conclusion=$conclusion" >> "$GITHUB_OUTPUT"
+          exit $exit_code
+    outputs:
+      sleep-step-conclusion: ${{ steps.sleep.outputs.conclusion }}
