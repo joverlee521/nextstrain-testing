@@ -38,7 +38,7 @@ jobs:
       - id: sleep
         run: |
           exit_code=0
-          timeout 5s sleep 5m || exit_code=$?
+          timeout 5s sleep 3s || exit_code=$?
 
           if [[ $exit_code == 0 ]]; then
             conclusion="success"
