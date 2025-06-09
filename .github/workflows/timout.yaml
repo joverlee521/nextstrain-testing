@@ -9,8 +9,8 @@ jobs:
     steps:
       - id: sleep
         run: |
-          timeout 55s sleep 5m
-          exit_status=$?
+          exit_status=0
+          timeout 55s sleep 5m || exit_status=$?
           if [[ $exit_status == 124 ]]; then
             echo "Command timed out"
             exit 0
