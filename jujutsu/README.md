@@ -14,7 +14,18 @@
 
 ## Demo workflow
 
+- Start new revision - `jj new -m <description>`
+- Add more in-depth description - `jj describe`
+- Drop all current changes - `jj abandon`
+- Undo a command - `jj undo`
+- Edit any previous commit message - `jj describe <rev>`
+- Squash any changes - `jj squash`
+- Split changes into separate commits - `jj split`
+- Edit changes in any previous commit - `jj edit <rev>`
+- Track the changes new branch - `jj bookmark create <name>`
 
+- See log of previous operations - `jj op log`
+- Restore to a previous state from the op log - `jj op restore <operation ID>`
 
 ## Resources
 
