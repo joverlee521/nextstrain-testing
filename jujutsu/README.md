@@ -6,7 +6,12 @@
     - Use git and jj in the same repo `jj git init --colocate`
 - every new file and change is automatically committed
 - files that match .gitignore patterns are _not_ tracked
-- bookmarks are named pointers - they map to git branches
+- commits have stable revision id in addition to the commit hash
+- bookmarks are named pointers that map to git branches
+- bookmarks have to be updated manually = no accidental commits to main
+- conficts are recorded in commits so that they can be resolved later
+- descendants of amended revisions are automatically rebased
+
 
 ## Resources
 
