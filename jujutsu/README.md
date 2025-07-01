@@ -12,6 +12,9 @@
 - conficts are recorded in commits so that they can be resolved later
 - descendants of amended revisions are automatically rebased
 
+## Demo workflow
+
+
 
 ## Resources
 
