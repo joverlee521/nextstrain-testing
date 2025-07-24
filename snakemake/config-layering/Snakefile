@@ -1,7 +1,17 @@
-def resolve_config_files():
-    return ["default-config.yaml", "custom-config.yaml"]
+import yaml
+import snakemake
 
-for configfile in resolve_config_files():
-    configfile: configfile
+
+if '_base_configfile' in config:
+    configfile: config['_base_configfile']
+
+if os.path.exists("config.yaml"):
+    configfile: "config.yaml"
+
+# NOTE: This does not work because `--config` no longer overrides the config files
+# if os.path.exists("config.yaml"):
+#     with open("config.yaml", "r", encoding = "utf-8") as f:
+#         custom_config = yaml.safe_load(f)
+#         snakemake.utils.update_config(config, custom_config)
 
 print(config)
