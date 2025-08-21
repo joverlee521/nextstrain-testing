@@ -1,0 +1,41 @@
+"""
+Running with
+`nextstrain build --cpus 2 . all --keep-going`
+
+Rules a and b will complete even though rule c fails and the `all` target
+depends on the output of c. 
+"""
+TYPES = ['1', '2', '3','4']
+
+rule a:
+    output: touch("results/{type}/a.done")
+    shell:
+        """
+        sleep 5
+        exit 0
+        """
+
+rule b:
+    input: "results/{type}/a.done"
+    output: touch("results/{type}/b.done")
+    shell:
+        """
+        sleep 5
+        exit 0
+        """
+
+rule c:
+    input: "results/{type}/b.done"
+    output: touch("results/{type}/c.done")
+    shell:
+        """
+        exit 1
+        """
+
+rule all:
+    input: expand("results/{type}/c.done", type=TYPES)
+    output: touch("results/all.done")
+    shell:
+        """
+        exit 0
+        """
