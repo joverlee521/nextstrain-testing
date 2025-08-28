@@ -1,0 +1,58 @@
+"""
+Making sure that the input stays the same between rules even though the
+remote file was updated in the middle of the workflow run.
+
+If the remote file is updated, then Snakemake will retrieve the file at the
+_start_ of the workflow and use the same local file through the rest of the run.
+This is obvious in the Snakemake logs, the retrieval happens before the jobs
+are run
+
+```
+Assuming unrestricted shared filesystem usage.
+host: 1d4b8690eaea
+Building DAG of jobs...
+Retrieving from storage: s3://nextstrain-data/files/workflows/zika/trials/jover/metadata.tsv.zst
+Finished retrieval.
+Using shell: /usr/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job      count
+-----  -------
+a            1
+all          1
+b            1
+total        3
+
+Select jobs to execute...
+Execute 1 jobs...
+```
+
+"""
+
+include: "shared/snakemake/remote_files.smk"
+
+rule all:
+    input:
+        "results/rule_b.txt"
+
+
+rule a:
+    input: path_or_url("s3://nextstrain-data/files/workflows/zika/trials/jover/metadata.tsv.zst")
+    output: touch("results/rule_a.txt")
+    shell:
+        r"""
+        wc -l {input:q}
+        sleep 10
+        """
+
+
+rule b:
+    input:
+        remote=path_or_url("s3://nextstrain-data/files/workflows/zika/trials/jover/metadata.tsv.zst"),
+        rule_a="results/rule_a.txt",
+    output: touch("results/rule_b.txt")
+    shell:
+        r"""
+        wc -l {input.remote:q}
+        """
