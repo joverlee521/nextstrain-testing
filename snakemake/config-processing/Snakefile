@@ -1,0 +1,22 @@
+import yaml
+import snakemake
+from copy import deepcopy
+
+
+if os.path.exists("default-config.yaml"):
+    configfile: "default-config.yaml"
+
+
+preprocess_config = deepcopy(config)
+config = {}
+for key, value in preprocess_config.items():
+    config[key] = value
+
+rule a:
+    output: touch("results/a.txt")
+    params:
+        subsample = str(config["subsample"])
+    shell:
+        """
+        echo {params.subsample:q}
+        """

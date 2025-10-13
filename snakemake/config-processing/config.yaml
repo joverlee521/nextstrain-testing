@@ -1,0 +1,10 @@
+test: "overlay"
+c: 3
+
+subsample:
+  non_b1: ~
+  b1: ~
+  custom_group: >-
+    --group-by lineage year country
+    --sequences-per-group 50
+    ...

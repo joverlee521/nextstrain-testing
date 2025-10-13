@@ -1,0 +1,9 @@
+from snakemake.utils import min_version
+
+# Minimum Snakemake version needed for the storage plugins used in remote_files.smk
+min_version("8.0.0")
+
+
+min_version("7.0.0")
+
+print(workflow)

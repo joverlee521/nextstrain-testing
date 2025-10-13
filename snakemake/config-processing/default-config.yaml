@@ -1,0 +1,12 @@
+test: "base"
+b: 2
+
+subsample:
+  non_b1: >-
+    --group-by lineage year country
+    --sequences-per-group 50
+    ...
+  b1: >-
+    --group-by country year
+    --subsample-max-sequences 300
+    ...
