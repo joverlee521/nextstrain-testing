@@ -1,0 +1,11 @@
+# Testing if nullifying then adding a custom subsample will work
+#
+#    nextstrain build . --configfile null-config.yaml
+#    {'subsample': {'new_subsample': 'test-new-subsample', 'non_b1': None, 'b1': None, 'custom_group': '--group-by lineage year country --sequences-per-group 50 ...'}, 'test': 'overlay', 'c': 3}
+#
+# It does not :( 
+subsample: ~
+
+subsample:
+  new_subsample: "test-new-subsample"
+    
