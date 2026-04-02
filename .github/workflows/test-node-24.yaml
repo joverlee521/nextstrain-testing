@@ -1,0 +1,17 @@
+name: test node 24
+
+on:
+  push:
+    paths:
+      - .github/workflows/test-node-24.yaml
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: node --version
+      - uses: actions/checkout@v4
+
