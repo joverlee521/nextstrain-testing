@@ -7,16 +7,19 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      ANALYSIS_EXAMPLE_DIR: configs/configs/
+      ANALYSIS_DIR: analysis-directory/
     steps:
       - uses: actions/checkout@v7
         with:
           ref: ${{ github.sha }}
           sparse-checkout-cone-mode: false
-          sparse-checkout: configs/configs/
-          path: analysis-directory
+          sparse-checkout: ${{ env.ANALYSIS_EXAMPLE_DIR }}
+          path: ${{ env.ANALYSIS_DIR }}
 
-      - run: ls -lah analysis-directory/configs/configs/*
+      - run: ls -lah ${{ env.ANALYSIS_DIR}}${{ env.ANALYSIS_EXAMPLE_DIR }}*
 
-      - run: mv analysis-directory/configs/configs/* analysis-directory/
+      - run: mv ${{ env.ANALYSIS_DIR}}${{ env.ANALYSIS_EXAMPLE_DIR }}* ${{ env.ANALYSIS_DIR }}
 
-      - run: ls -lah analysis-directory/*
+      - run: ls -lah ${{ env.ANALYSIS_DIR }}*
