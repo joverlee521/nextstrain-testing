@@ -1,0 +1,22 @@
+name: Test sparse checkout
+
+on:
+  workflow_dispatch:
+
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.sha }}
+          sparse-checkout-cone-mode: false
+          sparse-checkout: configs/configs/
+          path: analysis-directory
+
+      - run: ls -lah analysis-directory/configs/configs/*
+
+      - run: mv analysis-directory/configs/configs/* analysis-directory/
+
+      - run: ls -lah analysis-directory/*
